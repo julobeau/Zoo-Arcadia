@@ -1,0 +1,9 @@
+@use "../custom";
+
+.hero{
+    height:30rem;
+    font-family: custom.$font-family-serif;
+    background-size: cover;
+    background-position: center;
+    color: white;
+}

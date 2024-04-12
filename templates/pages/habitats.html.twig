@@ -1,0 +1,36 @@
+{% extends 'index.html.twig' %}
+
+{% block main %}
+
+<div class="container-fluid">
+    <!--Debut Hero -->
+    <div class="habitats-image-hero row align-items-center text-center mt-3 mx-1 rounded">
+        <h1 class="titre-principal">Les habitats</h1>
+    </div>
+    <!--Fin Hero -->
+    <!-- Debut liste habitats-->
+    <div class="section row section-habitats justify-content-around p-3 mt-3 mx-1 mb-3 rounded">
+        <div class="col-lg-4 col-md-6 col-sm-12 justify-content-center text-center">
+            <div class="mx-auto image-cercle savane ratio ratio-1x1 w-75 mb-3">&nbsp;</div>
+            <button class="btn btn-primary mb-3 btn-habitat" id="savane">Découvrir l'habitat Savane</button>
+            
+        </div>
+        <div class="col-lg-4  col-md-6 col-sm-12 text-center">
+            <div class="mx-auto image-cercle jungle  ratio ratio-1x1 w-75 mb-3">&nbsp;</div>
+            <a class="btn btn-primary mb-3 btn-habitat" id="jungle">Découvrir l'habitat Jungle</a>
+        </div>
+        <div class="col-lg-4  col-md-6 col-sm-12 text-center">
+            <div class="mx-auto image-cercle marais ratio ratio-1x1 w-75  mb-3">&nbsp;</div>
+            <a class="btn btn-primary btn-habitat" id="marais">Découvrir l'habitat Marais</a>
+        </div>
+    </div>
+    <!-- Fin liste habitats -->
+    <!-- Debut habitat choisi -->
+    <div class="container-fluid bg-dark rounded" id="habitat">
+    {% block habitat %}
+    
+    {% endblock %}
+    </div>
+    <!-- Fin habitat choisi -->
+</div>
+{% endblock %}

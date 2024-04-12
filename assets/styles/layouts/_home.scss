@@ -1,0 +1,36 @@
+@use "../custom" as custom;
+@use "../components/image-cercle" as img_cercle;
+
+
+.section-habitats {
+    background-color: custom.$tertiary;
+}
+
+.btn-habitat {
+    max-width: 10rem;
+}
+
+.savane{
+    @extend .image-cercle;
+    background-image: url('../../assets/images/habitats/savane-david-clode-jJWBM15E1AA-unsplash.webp');
+}
+.jungle{
+    @extend .image-cercle;
+    background-image: url(../../assets/images/habitats/jungle-justin-clark-H7JiEU8Slnw-unsplash.webp);
+}
+.marais{
+    @extend .image-cercle;
+    background-image: url(../../assets/images/habitats/marais-tim-foster-eYeESGYSZoY-unsplash.webp);
+}
+
+.texte-presentation {
+    font-size: medium;
+}
+
+.section-services {
+    background-color: custom.$dark;
+
+    .btn-service {
+        max-width: 10rem;
+    }
+}

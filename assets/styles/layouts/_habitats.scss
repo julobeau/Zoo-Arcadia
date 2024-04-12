@@ -1,0 +1,20 @@
+@use "../custom" as custom;
+@use "../components/hero" as hero;
+
+.habitats-image-hero {
+    @extend .hero;
+    color: white;
+    background-image: url(../images/heros/habitat-hero.webp);
+}
+
+.image-savane{
+    @extend .hero;
+    background-image: url(../images/habitats/savane-david-clode-jJWBM15E1AA-unsplash.webp);
+    color: white;
+}
+
+.habitat-accroche{
+    font-family: custom.$font-family-serif;
+    color: custom.$primary;
+    font-size: 2rem;
+}

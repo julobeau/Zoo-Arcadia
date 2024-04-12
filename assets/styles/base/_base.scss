@@ -1,0 +1,30 @@
+@use "../custom" as custom;
+
+body {
+    background-color: custom.$secondary;
+    font-family: custom.$font-family-sans-serif;
+}
+
+.titre-principal {
+    font-family: custom.$font-family-serif;
+    font-size: 5rem;
+
+    @media screen and (max-width:450px){
+        font-size: 3rem;
+    }
+}
+
+.icon-reseaux{
+    font-size: 2rem;
+    color: custom.$black;
+}
+
+.titre-secondaire {
+    font-family: custom.$font-family-serif;
+    font-size: 4rem;
+
+    @media screen and (max-width:450px){
+        font-size: 2rem;
+    }
+}
+

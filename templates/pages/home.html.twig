@@ -1,0 +1,167 @@
+{% extends 'index.html.twig' %}
+
+{% block main %}
+<div class="container-fluid">
+    <!--Debut Hero -->
+    <div class="section-hero row align-items-center mt-3 mx-1 p-3 rounded bg-primary">
+        <div class="col-lg-7 col-sm-12">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="10000">
+                        <img src="{{ asset ('images/nikolay-tchaouchev-ttpNCevA1tA-unsplash.jpg') }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="{{ asset ('images/pexels-rudy-kirchner-1831536.jpg') }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.jpg') }}" class="d-block w-100" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-5 col-sm-12 pl-3">
+            <div class="row text-center">
+                <h1 class="col-12 titre-principal">Zoo Arcadia</h1>
+            </div>
+            <div class="row text-start texte-presentation">
+                <p>Bienvenue au Zoo Arcadia, situé en Bretagne, à proximité de la majestueuse forêt de Brocéliande. Nous
+                    sommes fiers de notre indépendance énergétique et de nos valeurs écologiques, qui font de notre zoo
+                    un véritable havre de paix pour les animaux qui y résident.</p>
+                <p>Notre engagement envers la préservation de la nature se reflète dans chaque aspect de notre zoo, de
+                    nos habitats spacieux et naturels pour nos pensionnaires à notre approvisionnement en énergie
+                    renouvelable. Vous pourrez y découvrir une large variété d'espèces animales, des plus communes aux
+                    plus exotiques, évoluant dans un environnement adapté à leurs besoins.</p>
+            </div>
+        </div>
+    </div>
+    <!--Fin Hero -->
+    <!-- Debut habitats-->
+    <div class="section row section-habitats justify-content-center p-3 mt-3 mx-1 mb-3 rounded">
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <div class="mx-auto savane ratio ratio-1x1 w-50 mb-3"></div>
+            <a class="btn btn-primary mb-3 btn-habitat" href="/Savane">Découvrir l'habitat Savane</a>
+        </div>
+        <div class="col-lg-4  col-md-6 col-sm-12 text-center">
+            <div class="mx-auto jungle ratio ratio-1x1 w-50 mb-3"></div>
+            <a class="btn btn-primary mb-3 btn-habitat" href="/Jungle">Découvrir l'habitat Jungle</a>
+        </div>
+        <div class="col-lg-4  col-md-6 col-sm-12 text-center">
+            <div class="mx-auto marais ratio ratio-1x1 w-50  mb-3"></div>
+            <a class="btn btn-primary btn-habitat" href="/Marais">Découvrir l'habitat Marais</a>
+        </div>
+    </div>
+    <!-- Fin habitats -->
+    <!-- Debut services -->
+    <div class="section row section-services justify-content-center p-3 mt-3 mx-1 mb-3 rounded bg-dark">
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="w-75 mb-3 rounded" src="{{ asset ('images/services/restauration-pexels-kioto-estudio-16971086.webp') }}" alt="..."/>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="w-75 mb-3 rounded" src="{{ asset ('images/services/patrick-mcgregor-5P1fQ3lysiI-unsplash.webp') }}" alt="..."/>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
+            <img class="w-75 mb-3 rounded" src="{{ asset ('images/services/dusan-veverkolog-of8koAjYI7c-unsplash.webp') }}" alt="..."/>
+        </div>
+        <div class="row images-services">
+            <div class="col text-center">
+                <a class="btn btn-primary btn-service" href="/Services">Accéder aux services</a>
+            </div>
+        </div>
+    </div>
+    <!-- Fin services -->
+    
+    <!-- Debut animaux -->
+    <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-primary">
+        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.webp') }}" alt="..."/>
+            <div class="overlay">
+                <h2 class="overlay-Texte"><a href="#" alt="Photo de Kevin">Kevin</a></h2>
+            </div>
+        </div>
+        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-magda-ehlers-1319515.webp') }}" alt="..."/>
+            <div class="overlay">
+                <h2 class="overlay-Texte"><a href="#" alt="Photo de Melman">Melman</a></h2>
+            </div>
+        </div>
+        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-frans-van-heerden-1499596.webp') }}" alt="..."/>
+            <div class="overlay">
+                <h2 class="overlay-Texte"><a href="#" alt="Photo de Asmodée">Asmodée</a></h2>
+            </div>
+        </div>
+        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}" alt="..."/>
+            <div class="overlay">
+                <h2 class="overlay-Texte"><a href="#" alt="Photo de Alex">Alex</a></h2>
+            </div>
+        </div>
+    </div>
+    <!-- Fin animaux -->
+    <!-- Debut avis -->
+    <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-black">
+        <div class="col-lg-3 col-sm-6 mb-3">
+            <div class="card">
+                <div class="card-body bg-primary">
+                    <h5 class="card-title nom-personne">Prénom N.</h5>
+                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
+                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
+                    <p class="card-text commentaire">Commentaire...</p>
+                </div>
+            </div>
+        </div>    
+        <div class="col-lg-3 col-sm-6 mb-3">
+            <div class="card">
+                <div class="card-body bg-primary">
+                    <h5 class="card-title nom-personne">Prénom N.</h5>
+                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
+                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
+                    <p class="card-text commentaire">Commentaire...</p>
+                </div>
+            </div>
+        </div>    
+        <div class="col-lg-3 col-sm-6 mb-3">
+            <div class="card">
+                <div class="card-body bg-primary">
+                    <h5 class="card-title nom-personne">Prénom N.</h5>
+                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
+                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
+                    <p class="card-text commentaire">Commentaire...</p>
+                </div>
+            </div>
+        </div>    
+        <div class="col-lg-3 col-sm-6 mb-3">
+            <div class="card">
+                <div class="card-body bg-primary">
+                    <h5 class="card-title nom-personne">Prénom N.</h5>
+                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
+                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
+                    <p class="card-text commentaire">Commentaire...</p>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <!-- Fin avis -->
+    <!-- Debut Reseaux -->
+    <div class="section row section-animaux text-center p-3 mt-3 mx-1 mb-3">
+        <div class="col align-self-center mw-2">
+            <a href="#" target="_blank"><i class="bi bi-facebook mx-1 icon-reseaux"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-twitter-x mx-1 icon-reseaux"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-tiktok mx-1 icon-reseaux"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-instagram mx-1 icon-reseaux"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-linkedin mx-1 icon-reseaux"></i></a>
+        </div>
+    </div>
+    <!-- Fin Reseaux -->
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block stylesheets %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Neucha&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
+    {% endblock %}
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+
+<body>
+    <!-- Début HEADER -->
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src="#" alt="logo-arcadia"/></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item me-4 fs-4">
+                            <a class="nav-link" href="/">Accueil</a>
+                        </li>
+                        <li class="nav-item me-4 fs-4">
+                            <a class="nav-link" href="/services">Services</a>
+                        </li>
+                        <li class="nav-item me-4 fs-4 dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Habitats
+                            </a>
+                            <ul class="dropdown-menu bg-dark">
+                                <li><a class="dropdown-item" href="/habitats">Tous les habitats</a></li>
+                                <li><a class="dropdown-item" href="/habitats/savane">Savane</a></li>
+                                <li><a class="dropdown-item" href="/app/Jungle">Jungle</a></li>
+                                <li><a class="dropdown-item" href="/app/Marais">Marais</a></li>
+                                <li>
+                            </ul>
+                        </li>
+                        <li class="nav-item fs-4 me-4">
+                            <a class="nav-link" href="/app/Contact">Contact</a>
+                        </li>
+                        <li class="nav-item fs-4 me-4" data-show="disconnected">
+                            <a class="nav-link" href="/app/Connexion">Connexion</a>
+                        </li>
+                        <li class="nav-item fs-4 me-4" data-show="connected">
+                            <a class="nav-link" id="decoBtn">Déconnexion</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Fin HEADER -->
+
+    <!-- Début MAIN -->
+    {% block main %}
+
+    {% endblock %}
+    <!-- Fin MAIN -->
+    <!-- Début FOOTER -->
+    <footer>
+        <div class="row footer px-5 pt-3 mt-3 align-items-end justify-content-center bg-dark">
+            <div class="col-lg-6 col-sm-12">
+                <div class="row mb-4 align-items-end">
+                    <div class="col-6 info">
+                        <div class="row adresse mb-2">
+                            <div>Zoo Arcadia</div>
+                            <div>route de Merlin</div>
+                            <div>35123 Broceliande</div>
+                        </div>
+                        <div class="row horaires">
+                            <div>Ouvert toute l’année</div>
+                            <div>7J/7 à partir de 9h00</div>
+                            <div>Y compris les jours fériés</div>
+                        </div>
+                    </div>
+                    <div class="col-6 info text-center">
+                        <a href="/contact">Nous contacter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="row mb-4">
+                    <div class="col-6 info text-center">
+                        <a href="/rgpd">RGPD</a>
+                    </div>
+                    <div class="col-6 info text-center">
+                        <a href="/mentions">Mentions légales</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Fin FOOTER -->
+    <!--<script type="module" src="./Router/router.js"></script>
+    <script src="assets/js/script.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
+</body>
+
+</html>

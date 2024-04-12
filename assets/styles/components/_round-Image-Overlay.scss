@@ -1,0 +1,30 @@
+@use "../custom" as custom;
+
+.round-Image-Overlay {
+    position: relative;
+    transition: all 0.5s ease;
+    &:hover{
+        .image{
+            filter: brightness(0.5);
+        }
+        .overlay{
+            opacity: 1;
+        }
+    }
+    .overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100%;
+        width: 100%;
+        transform: translate(-50%, 0);
+        opacity: 0;
+
+        .overlay-Texte {
+            font-family: custom.$font-family-serif;
+            color: white;
+            font-size: 3rem;
+            text-align: center;
+        }
+    }
+}
