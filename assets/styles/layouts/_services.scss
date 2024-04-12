@@ -1,0 +1,12 @@
+@use "../custom" as custom;
+@use "../components/hero" as hero;
+
+.services-image-hero {
+    @extend .hero;
+    color: white;
+    background-image: url(../images/services/dusan-veverkolog-of8koAjYI7c-unsplash.webp);
+}
+
+.presentationService {
+    background-color: custom.$dark;
+}
