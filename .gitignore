@@ -9,5 +9,6 @@
 ###< symfony/framework-bundle ###
 
 .env.local
+.env.test
 
 assets/images

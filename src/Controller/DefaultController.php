@@ -14,22 +14,10 @@ class DefaultController extends AbstractController
         return $this->render('pages/home.html.twig');
     }
     
-    #[Route('/services')]
+    #[Route('/Services')]
     public function service(): Response
     {
         return $this->render('pages/services.html.twig');
-    }
-    
-    #[Route('/habitats')]
-    public function habitats(): Response
-    {
-        return $this->render('pages/habitats.html.twig');
-    }
-    
-    #[Route('/habitats/savane')]
-    public function savane(): Response
-    {
-        return $this->render('pages/savane.html.twig');
     }
 
 }
