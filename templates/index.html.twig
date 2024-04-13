@@ -51,13 +51,16 @@
                         <li class="nav-item fs-4 me-4">
                             <a class="nav-link" href="/Contact">Contact</a>
                         </li>
-                        <li class="nav-item fs-4 me-4" data-show="disconnected">
+                        {% if not is_granted('IS_AUTHENTICATED') %}
+                        <li class="nav-item fs-4 me-4">
                             <a class="nav-link" href="/Connexion">Connexion</a>
                         </li>
-                        <li class="nav-item fs-4 me-4" data-show="connected">
-                            <a class="nav-link" id="decoBtn">Déconnexion</a>
+                        {% endif %}
+                        {% if is_granted('IS_AUTHENTICATED') %}
+                        <li class="nav-item fs-4 me-4">
+                            <a class="nav-link" href="/logout">Déconnexion</a>
                         </li>
-
+                        {% endif %}
                     </ul>
                 </div>
             </div>

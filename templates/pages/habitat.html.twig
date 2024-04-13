@@ -1,0 +1,62 @@
+{% extends 'pages/habitats.html.twig' %}
+
+{% block habitat %}
+<div class="hero-{{ titreHabitat }}">
+    <div class="image-{{ titreHabitat }} text-center">
+        <img class="w-100" src="{{ asset ("images/#{ imageCover }") }}">
+        <h2 class="titre-secondaire">{{ titreHabitat }}</h2>
+    </div>
+    <div class="row mt-3 text-center">
+        <p class="habitat-accroche">{{ accroche }}</p>
+    </div>
+    <div class="row mt-3 text-center">
+        <div class="col-6">
+            <img class="w-100" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}" alt="lion Alex">
+        </div>
+        <div class="col-6">
+            <img class="w-100" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}" alt="lion Alex">
+        </div>
+    </div>
+    <div class="row mt-3 px-3 mx-2 pt-2 text-center bg-primary rounded">
+    {{ description|raw }}
+    </div>
+    <div class="row mt-3 habitats-animaux text-center bg-secondary">
+        <div class="col-12 text-uppercase">
+        {% if titreHabitat == "Savane" or titreHabitat == "Jungle" %}
+            Les animaux de la {{ titreHabitat }}.
+        {% else %}
+            Les animaux des {{ titreHabitat }}.
+        {% endif %}
+        </div>
+        <div class="col-12 mt-2">
+            <div class="row habitats-animaux-photos">
+                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
+                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
+                    <div class="section-animaux_overlay">
+                        <h2 class="section-animaux_nom">Alex</h2>
+                    </div>
+                </div>
+                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
+                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
+                    <div class="section-animaux_overlay">
+                        <h2 class="section-animaux_nom">Alex</h2>
+                    </div>
+                </div>
+                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
+                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
+                    <div class="section-animaux_overlay">
+                        <h2 class="section-animaux_nom">Alex</h2>
+                    </div>
+                </div>
+                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
+                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
+                    <div class="section-animaux_overlay">
+                        <h2 class="section-animaux_nom">Alex</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

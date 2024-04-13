@@ -7,9 +7,21 @@
     background-image: url(../images/heros/habitat-hero.webp);
 }
 
-.image-savane{
+.image-Savane{
     @extend .hero;
-    background-image: url(../images/habitats/savane-david-clode-jJWBM15E1AA-unsplash.webp);
+    background-image: url(../images/savane-david-clode-jJWBM15E1AA-unsplash.jpg);
+    color: white;
+}
+
+.image-Jungle{
+    @extend .hero;
+    background-image: url(../images/jungle-justin-clark-H7JiEU8Slnw-unsplash.jpg);
+    color: white;
+}
+
+.image-Marais{
+    @extend .hero;
+    background-image: url(../images/marais-tim-foster-eYeESGYSZoY-unsplash.jpg);
     color: white;
 }
 
