@@ -32,10 +32,4 @@ class DefaultController extends AbstractController
         return $this->render('pages/contact.html.twig',);
     }
     
-    #[Route('/Connexion')]
-    public function connexion(): Response
-    {
-        return $this->render('pages/connexion.html.twig',);
-    }
-
 }
