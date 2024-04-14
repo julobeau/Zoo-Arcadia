@@ -1,5 +1,6 @@
 @use "../custom" as custom;
 @use "../components/hero" as hero;
+@use "../base/base";
 
 .habitats-image-hero {
     @extend .hero;
@@ -7,10 +8,22 @@
     background-image: url(../images/heros/habitat-hero.webp);
 }
 
-.image-Savane{
+.imageHabitat{
     @extend .hero;
-    background-image: url(../images/savane-david-clode-jJWBM15E1AA-unsplash.jpg);
+    //background-image: url(../images/savane-david-clode-jJWBM15E1AA-unsplash.jpg);
     color: white;
+    position:relative;
+
+    &__image{
+        height:30rem;
+        object-fit: cover;
+    }
+
+    &__titreSecondaire{
+        @extend .titre-secondaire;
+        position:absolute;
+        top:50%;
+    }
 }
 
 .image-Jungle{

@@ -47,31 +47,21 @@
     <!--Fin Hero -->
     <!-- Debut habitats-->
     <div class="section row section-habitats justify-content-center p-3 mt-3 mx-1 mb-3 rounded">
+    {% for nom, image in habitatsImages %}
         <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <div class="mx-auto savane ratio ratio-1x1 w-50 mb-3"></div>
-            <a class="btn btn-primary mb-3 btn-habitat" href="/Habitats/Savane">Découvrir l'habitat Savane</a>
+            <div class="mx-auto {{ nom|lower }} ratio ratio-1x1 w-50 mb-3"></div>
+            <a class="btn btn-primary mb-3 btn-habitat" href="/Habitats/{{ nom }}">Découvrir l'habitat {{ nom }}</a>
         </div>
-        <div class="col-lg-4  col-md-6 col-sm-12 text-center">
-            <div class="mx-auto jungle ratio ratio-1x1 w-50 mb-3"></div>
-            <a class="btn btn-primary mb-3 btn-habitat" href="/Habitats/Jungle">Découvrir l'habitat Jungle</a>
-        </div>
-        <div class="col-lg-4  col-md-6 col-sm-12 text-center">
-            <div class="mx-auto marais ratio ratio-1x1 w-50  mb-3"></div>
-            <a class="btn btn-primary btn-habitat" href="/Habitats/Marais">Découvrir l'habitat Marais</a>
-        </div>
+    {% endfor %}
     </div>
     <!-- Fin habitats -->
     <!-- Debut services -->
     <div class="section row section-services justify-content-center p-3 mt-3 mx-1 mb-3 rounded bg-dark">
+    {% for image in servicesImages %}
         <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="w-75 mb-3 rounded" src="{{ asset ('images/services/restauration-pexels-kioto-estudio-16971086.webp') }}" alt="..."/>
+            <img class="w-75 mb-3 rounded" src="{{ asset ("images/services/#{ image }") }}" alt="..."/>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="w-75 mb-3 rounded" src="{{ asset ('images/services/patrick-mcgregor-5P1fQ3lysiI-unsplash.webp') }}" alt="..."/>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-12 text-center">
-            <img class="w-75 mb-3 rounded" src="{{ asset ('images/services/dusan-veverkolog-of8koAjYI7c-unsplash.webp') }}" alt="..."/>
-        </div>
+    {% endfor %}
         <div class="row images-services">
             <div class="col text-center">
                 <a class="btn btn-primary btn-service" href="/Services">Accéder aux services</a>
@@ -80,7 +70,7 @@
     </div>
     <!-- Fin services -->
     
-    <!-- Debut animaux -->
+    <!-- Debut animaux MongoDb necessaire -->
     <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-primary">
         <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
             <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.webp') }}" alt="..."/>
@@ -109,59 +99,33 @@
     </div>
     <!-- Fin animaux -->
     <!-- Debut avis -->
-    <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-black">
+    <div class="section row section-avis justify-content-around px-3 pt-3 mt-3 mx-1 mb-3 rounded bg-black">
+    {% for pseudo, review in reviews|slice(0,5) %}
         <div class="col-lg-3 col-sm-6 mb-3">
             <div class="card">
                 <div class="card-body bg-primary">
-                    <h5 class="card-title nom-personne">Prénom N.</h5>
-                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
-                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
-                    <p class="card-text commentaire">Commentaire...</p>
+                    <h5 class="card-title nom-personne">{{ pseudo }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le {{ review.date }}</h6>
+                    <p class="card-text stars">
+                    {% for i in 0..review.grade -1 %}
+                    <i class="bi bi-star-fill"></i>
+                    {% endfor %}
+                    {% if review.grade < 5 %}
+                    {% for i in 0..review.grade -4 %}
+                    <i class="bi bi-star"></i>
+                    {% endfor %}
+                    {% endif %}
+
+                    </p>
+                    <p class="card-text commentaire">{{ review.comment|length > 27 ? review.comment|slice(0,27) ~ '…' : review.comment }}</p>
                 </div>
             </div>
-        </div>    
-        <div class="col-lg-3 col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body bg-primary">
-                    <h5 class="card-title nom-personne">Prénom N.</h5>
-                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
-                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
-                    <p class="card-text commentaire">Commentaire...</p>
-                </div>
-            </div>
-        </div>    
-        <div class="col-lg-3 col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body bg-primary">
-                    <h5 class="card-title nom-personne">Prénom N.</h5>
-                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
-                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
-                    <p class="card-text commentaire">Commentaire...</p>
-                </div>
-            </div>
-        </div>    
-        <div class="col-lg-3 col-sm-6 mb-3">
-            <div class="card">
-                <div class="card-body bg-primary">
-                    <h5 class="card-title nom-personne">Prénom N.</h5>
-                    <h6 class="card-subtitle mb-2 text-muted date-visite">publié le dd/mm/yyyy</h6>
-                    <p class="card-text stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i></p>
-                    <p class="card-text commentaire">Commentaire...</p>
-                </div>
-            </div>
-        </div>    
+        </div>
+    {% endfor %}
     </div>
     <!-- Fin avis -->
     <!-- Debut Reseaux -->
-    <div class="section row section-animaux text-center p-3 mt-3 mx-1 mb-3">
-        <div class="col align-self-center mw-2">
-            <a href="#" target="_blank"><i class="bi bi-facebook mx-1 icon-reseaux"></i></a>
-            <a href="#" target="_blank"><i class="bi bi-twitter-x mx-1 icon-reseaux"></i></a>
-            <a href="#" target="_blank"><i class="bi bi-tiktok mx-1 icon-reseaux"></i></a>
-            <a href="#" target="_blank"><i class="bi bi-instagram mx-1 icon-reseaux"></i></a>
-            <a href="#" target="_blank"><i class="bi bi-linkedin mx-1 icon-reseaux"></i></a>
-        </div>
-    </div>
+    {{ include('pages/socialMedia.html') }}
     <!-- Fin Reseaux -->
 </div>
 {% endblock %}

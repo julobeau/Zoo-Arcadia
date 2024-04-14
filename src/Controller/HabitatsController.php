@@ -32,7 +32,7 @@ class HabitatsController extends AbstractController
                 $coverImage = $image->getImage();
             }
             else{
-                $otherImages = $image->getImage();
+                $otherImages[] = $image->getImage();
             }
         }
         //dd($habitatData);

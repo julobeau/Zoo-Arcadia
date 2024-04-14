@@ -12,7 +12,7 @@
     {% for service in allService %}
     <div class="section  presentationService justify-content-around p-3 mt-3 mx-1 mb-3 rounded">
         <div class="justify-content-center text-center">
-            <h2>{{ service.nom }}</h2>
+            <h2 class="text-primary">{{ service.nom }}</h2>
             
             <div class="row mt-3 align-items-center presentationService__{{ service.nom }}">
                 {% if loop.index0 % 2 == 0 %}
@@ -20,7 +20,7 @@
                 {% else %}
                 <div class="col-lg-6 order-1">
                 {% endif %}
-                    <p class="presentationService_text bg-primary rounded p-3">{{ service.description }}</p>
+                    <div class="presentationService_text bg-primary text-black rounded p-3">{{ service.description|raw }}</div>
                 </div>
                 <div class="col-lg-6">
                 {% if not service.image is empty %}

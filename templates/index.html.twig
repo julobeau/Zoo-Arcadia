@@ -19,52 +19,7 @@
 <body>
     <!-- Début HEADER -->
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="#" alt="logo-arcadia"/></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item me-4 fs-4">
-                            <a class="nav-link" href="/">Accueil</a>
-                        </li>
-                        <li class="nav-item me-4 fs-4">
-                            <a class="nav-link" href="/Services">Services</a>
-                        </li>
-                        <li class="nav-item me-4 fs-4 dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Habitats
-                            </a>
-                            <ul class="dropdown-menu bg-dark">
-                                <li><a class="dropdown-item" href="/Habitats">Tous les habitats</a></li>
-                                <li><a class="dropdown-item" href="/Habitats/Savane">Savane</a></li>
-                                <li><a class="dropdown-item" href="/Habitats/Jungle">Jungle</a></li>
-                                <li><a class="dropdown-item" href="/Habitats/Marais">Marais</a></li>
-                                <li>
-                            </ul>
-                        </li>
-                        <li class="nav-item fs-4 me-4">
-                            <a class="nav-link" href="/Contact">Contact</a>
-                        </li>
-                        {% if not is_granted('IS_AUTHENTICATED') %}
-                        <li class="nav-item fs-4 me-4">
-                            <a class="nav-link" href="/Connexion">Connexion</a>
-                        </li>
-                        {% endif %}
-                        {% if is_granted('IS_AUTHENTICATED') %}
-                        <li class="nav-item fs-4 me-4">
-                            <a class="nav-link" href="/logout">Déconnexion</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        {{ include('pages/header.html.twig') }}
     </header>
     <!-- Fin HEADER -->
 
@@ -75,37 +30,7 @@
     <!-- Fin MAIN -->
     <!-- Début FOOTER -->
     <footer>
-        <div class="row footer px-5 pt-3 mt-3 align-items-end justify-content-center bg-dark">
-            <div class="col-lg-6 col-sm-12">
-                <div class="row mb-4 align-items-end">
-                    <div class="col-6 info">
-                        <div class="row adresse mb-2">
-                            <div>Zoo Arcadia</div>
-                            <div>route de Merlin</div>
-                            <div>35123 Broceliande</div>
-                        </div>
-                        <div class="row horaires">
-                            <div>Ouvert toute l’année</div>
-                            <div>7J/7 à partir de 9h00</div>
-                            <div>Y compris les jours fériés</div>
-                        </div>
-                    </div>
-                    <div class="col-6 info text-center">
-                        <a href="/contact">Nous contacter</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
-                <div class="row mb-4">
-                    <div class="col-6 info text-center">
-                        <a href="/rgpd">RGPD</a>
-                    </div>
-                    <div class="col-6 info text-center">
-                        <a href="/mentions">Mentions légales</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    {{ include('pages/footer.html.twig') }}
     </footer>
 </body>
 
