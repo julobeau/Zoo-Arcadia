@@ -72,29 +72,21 @@
     
     <!-- Debut animaux MongoDb necessaire -->
     <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-primary">
-        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.webp') }}" alt="..."/>
-            <div class="overlay">
-                <h2 class="overlay-Texte"><a href="#" alt="Photo de Kevin">Kevin</a></h2>
-            </div>
+        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.webp') }}" alt="..."/>
+            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Kevin">Kevin</a></h2>
         </div>
-        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-magda-ehlers-1319515.webp') }}" alt="..."/>
-            <div class="overlay">
-                <h2 class="overlay-Texte"><a href="#" alt="Photo de Melman">Melman</a></h2>
-            </div>
+        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-magda-ehlers-1319515.webp') }}" alt="..."/>
+            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Melman">Melman</a></h2>
         </div>
-        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-frans-van-heerden-1499596.webp') }}" alt="..."/>
-            <div class="overlay">
-                <h2 class="overlay-Texte"><a href="#" alt="Photo de Asmodée">Asmodée</a></h2>
-            </div>
+        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-frans-van-heerden-1499596.webp') }}" alt="..."/>
+            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Asmodée">Asmodée</a></h2>
         </div>
-        <div class="round-Image-Overlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 image rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}" alt="..."/>
-            <div class="overlay">
-                <h2 class="overlay-Texte"><a href="#" alt="Photo de Alex">Alex</a></h2>
-            </div>
+        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
+            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}" alt="..."/>
+            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Alex">Alex</a></h2>
         </div>
     </div>
     <!-- Fin animaux -->
@@ -117,13 +109,13 @@
                     {% endif %}
 
                     </p>
-                    <p class="card-text commentaire">{{ review.comment|length > 27 ? review.comment|slice(0,27) ~ '…' : review.comment }}</p>
+                    <p class="card-text commentaire">{{ review.comment|length > 24 ? review.comment|slice(0,24) ~ '…' : review.comment }}</p>
                 </div>
             </div>
         </div>
     {% endfor %}
-        <div class="row mb-3 text-center">
-            <button type="button" class="btn btn-primary btn-modale" data-bs-toggle="modal" data-bs-target="#reviewModal">
+        <div class="row mb-3 mt-2 justify-content-around">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
             Laisser un avis
             </button>
         </div>

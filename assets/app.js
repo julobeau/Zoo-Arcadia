@@ -8,6 +8,7 @@ import './bootstrap.js';
 import './styles/app.scss';
 import './js/bootstrap.bundle.min.js';
 import './js/index.bundle.min.js';
+import './js/addReview.js';
 import 'bootstrap-icons/font/bootstrap-icons.min.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

@@ -1,8 +1,9 @@
-@use "utils/reset";
+
 @use "base/base";
 @use "components/navbar";
 @use "components/footer";
 @use "components/round-Image-Overlay";
+@use "components/button";
 @use "layouts/habitats";
 @use "layouts/home";
 @use "layouts/services";
@@ -12,3 +13,4 @@
 @use "custom";
 //@import '../../vendor/twbs/bootstrap/scss/bootstrap';
 
+@use "utils/reset";

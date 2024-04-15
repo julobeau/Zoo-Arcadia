@@ -25,26 +25,43 @@ class ApiReviewController extends AbstractController
     #[Route(name: 'new', methods:['POST'] )]
     public function addReview(Request $request): Response
     {
-        //$review = new Review();
-        $review = $this->serializer->deserialize($request->getContent(), Review::class, 'json');
-        dd($review);
-        $review->setPseudo('new service');
-        $review->setNote('new service');
-
-        $review->setComment('une jolie description');
+        $reviewPosted = $request->toArray();
+        $reviewNote = (int)$reviewPosted['Note'];
+        $review = new Review();
+        $review->setPseudo($reviewPosted['Pseudo']);
+        $review->setNote($reviewNote);
+        $review->setComment($reviewPosted['Comment']);
         $review->setCreatedAt(new \DateTimeImmutable());
+        $review->setValidated(false);
 
-        $this->manager->persist($review);
-        $this->manager->flush();
+        /*$this->manager->persist($review);
+        $this->manager->flush();*/
 
-        return $this->json(
-            ['message' => "Review created with {$review->getId()} id"],
+        $responseData = $this->serializer->serialize($review, 'json');
+
+        return $this->json($responseData,
+            /*[
+                'Pseudo' => $review->getPseudo(),
+                'Note' => $review->getNote(),
+                'Comment' => $review->getComment()
+            ],*/
             Response::HTTP_CREATED,
         );
     }
 
     #[Route('/{id}', name: 'show', methods: 'GET')]
     public function show(int $id): Response
+    {
+        $review = $this->repository->findOneby(['id' => $id]);
+        if($review){
+            $responseData = $this->serializer->serialize($review, 'json');
+            return new JsonResponse($responseData, Response::HTTP_OK);
+        }
+        return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+    }
+    
+    #[Route('/{id}', name: 'delete', methods: 'DELETE')]
+    public function delete(int $id): Response
     {
         $review = $this->repository->findOneby(['id' => $id]);
         if($review){

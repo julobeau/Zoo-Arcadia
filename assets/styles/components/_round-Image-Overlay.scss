@@ -1,30 +1,28 @@
 @use "../custom" as custom;
 
-.round-Image-Overlay {
+.roundImageOverlay {
     position: relative;
     transition: all 0.5s ease;
+
     &:hover{
-        .image{
+        .roundImageOverlay__image{
             filter: brightness(0.5);
         }
-        .overlay{
+        .roundImageOverlay__texte{
+            text-decoration: none;
             opacity: 1;
         }
     }
-    .overlay {
+    &__texte {
         position: absolute;
         top: 50%;
         left: 50%;
-        height: 100%;
-        width: 100%;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, -50%);
+        font-family: custom.$font-family-serif;
+        color: white;
+        font-size: 3rem;
+        text-align: center;
+        text-decoration: none;
         opacity: 0;
-
-        .overlay-Texte {
-            font-family: custom.$font-family-serif;
-            color: white;
-            font-size: 3rem;
-            text-align: center;
-        }
     }
 }

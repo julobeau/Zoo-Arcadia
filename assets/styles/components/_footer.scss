@@ -4,6 +4,8 @@
     color: custom.$primary;
 
     a{
+        text-decoration: none;
+        
         &:hover {
             color: custom.$black;
         }
