@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('api/service', name: 'app_api_service_')]
 
-class ServiceController extends AbstractController
+class ApiServiceController extends AbstractController
 {
     public function __construct(
         private EntityManagerInterface $manager,
@@ -67,7 +67,7 @@ class ServiceController extends AbstractController
     #[Route('/{id}', name: 'edit', methods: 'PUT')]
     public function edit(int $id): Response
     {
-        //$service = aller chercher restaurant id = $id
+        //$service = aller chercher service id = $id
         if(!$service){
             throw new \Exception("Pas de service avec l'id {$id}");
         }

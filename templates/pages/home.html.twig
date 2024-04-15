@@ -122,10 +122,16 @@
             </div>
         </div>
     {% endfor %}
+        <div class="row mb-3 text-center">
+            <button type="button" class="btn btn-primary btn-modale" data-bs-toggle="modal" data-bs-target="#reviewModal">
+            Laisser un avis
+            </button>
+        </div>
     </div>
     <!-- Fin avis -->
     <!-- Debut Reseaux -->
     {{ include('pages/socialMedia.html') }}
     <!-- Fin Reseaux -->
 </div>
+{{ include('pages/modale.html.twig') }}
 {% endblock %}
