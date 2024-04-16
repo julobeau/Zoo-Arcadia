@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HabitatsController extends AbstractController
 {
-    public $lesHabitats = ['Savane', 'Jungle', 'Marais'];
+    //public $lesHabitats = ['Savane', 'Jungle', 'Marais'];
 
     #[Route('/')]
     public function habitats(): Response
@@ -35,31 +36,36 @@ class HabitatsController extends AbstractController
                 $otherImages[] = $image->getImage();
             }
         }
-        //dd($habitatData);
+        $animals = $habitatData->getAnimals();
+        foreach($animals as $animal){
+            $AnimalImages = $animal->getImages();
+            foreach($AnimalImages as $image){
+                echo $image->getImage();
+            }
+        }
         return $this->render('pages/habitat.html.twig',
         ['titreHabitat' => $habitatData->getNom(),
         'accroche' => $habitatData->getResume(),
         'description' => $habitatData->getDescription(),
-        'animaux' => $habitatData->getAnimals(),
+        'animals' => $habitatData->getAnimals(),
         'imageCover' => $coverImage,
         'images' => $otherImages
         ]
         );
     }
-    
-    #[Route('/Jungle')]
-    public function jungle(): Response
+
+    /*#[Route('/{habitat}/{animal}', name: 'animal_show')]
+    public function showAnimal(
+        HabitatRepository $HabitatRepository,
+        AnimalRepository $AnimalRepository,
+        string $habitat,
+        string $animal
+        ): Response
     {
-        return $this->render('pages/habitat.html.twig',
-        ['titreHabitat' => 'Jungle']
-        );
-    }
+        
+        $animalData = $AnimalRepository->findOneBy(['firstname' => $animal]);
     
-    #[Route('/Marais')]
-    public function marais(): Response
-    {
-        return $this->render('pages/marais.html.twig',
-        ['titreHabitat' => 'Marais']
-        );
-    }
+
+        return $this->render('pages/animal.html.twig');
+    }*/
 }

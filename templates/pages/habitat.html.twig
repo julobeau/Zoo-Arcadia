@@ -19,7 +19,7 @@
     <div class="row px-3 mx-2 pt-2 text-center bg-primary rounded">
     {{ description|raw }}
     </div>
-    <div class="row mt-3 habitats-animaux text-center bg-secondary">
+    <div class="row mt-3 habitats-animaux  text-center bg-secondary">
         <div class="col-12 text-uppercase">
         {% if titreHabitat == "Savane" or titreHabitat == "Jungle" %}
             Les animaux de la {{ titreHabitat }}.
@@ -28,31 +28,17 @@
         {% endif %}
         </div>
         <div class="col-12 mt-2">
-            <div class="row habitats-animaux-photos">
+            <div class="row habitats-animaux-photos justify-content-center">
+            {% for animal in animals %}
                 <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
-                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
-                    <div class="section-animaux_overlay">
-                        <h2 class="section-animaux_nom">Alex</h2>
-                    </div>
+                {% for image in animal.Images %}
+                    {% if image.cover == 1 %}
+                        <img class="w-100 img-animaux rounded-circle" src="{{ asset ("images/animaux/#{ titreHabitat }/#{ image.Image }") }}"/>
+                    {% endif %}
+                {% endfor %}
+                    <a href='/Habitats/{{ titreHabitat }}/{{ animal.firstname }}'><h2 class="section-animaux_nom mt-2">{{ animal.firstname }}</h2></a>
                 </div>
-                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
-                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
-                    <div class="section-animaux_overlay">
-                        <h2 class="section-animaux_nom">Alex</h2>
-                    </div>
-                </div>
-                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
-                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
-                    <div class="section-animaux_overlay">
-                        <h2 class="section-animaux_nom">Alex</h2>
-                    </div>
-                </div>
-                <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
-                    <img class="w-100 img-animaux rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}"/>
-                    <div class="section-animaux_overlay">
-                        <h2 class="section-animaux_nom">Alex</h2>
-                    </div>
-                </div>
+            {% endfor %}
             </div>
         </div>
     </div>
