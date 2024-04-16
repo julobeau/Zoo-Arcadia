@@ -64,10 +64,6 @@ class DefaultController extends AbstractController
     );
     }
     
-    #[Route('/Contact')]
-    public function contact(): Response
-    {
-        return $this->render('pages/contact.html.twig',);
-    }
+
     
 }

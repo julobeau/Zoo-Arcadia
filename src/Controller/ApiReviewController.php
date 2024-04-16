@@ -28,25 +28,20 @@ class ApiReviewController extends AbstractController
         $reviewPosted = $request->toArray();
         $reviewNote = (int)$reviewPosted['Note'];
         $review = new Review();
-        $review->setPseudo($reviewPosted['Pseudo']);
-        $review->setNote($reviewNote);
-        $review->setComment($reviewPosted['Comment']);
-        $review->setCreatedAt(new \DateTimeImmutable());
-        $review->setValidated(false);
+        $review->setPseudo($reviewPosted['Pseudo'])
+                ->setNote($reviewNote)
+                ->setComment($reviewPosted['Comment'])
+                ->setCreatedAt(new \DateTimeImmutable())
+                ->setValidated(false);
 
-        /*$this->manager->persist($review);
-        $this->manager->flush();*/
+        $this->manager->persist($review);
+        $this->manager->flush();
 
         $responseData = $this->serializer->serialize($review, 'json');
 
         return $this->json($responseData,
-            /*[
-                'Pseudo' => $review->getPseudo(),
-                'Note' => $review->getNote(),
-                'Comment' => $review->getComment()
-            ],*/
-            Response::HTTP_CREATED,
-        );
+                            Response::HTTP_CREATED,
+                        );
     }
 
     #[Route('/{id}', name: 'show', methods: 'GET')]
