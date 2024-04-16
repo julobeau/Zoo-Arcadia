@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <h1>Nouveau mail de {{ contactFirstname }} {{ contactName }}</h1>
+    <p>Email : {{ contactEmail }}</p>
+    <p>sujet : {{ subject }}</p>
+    <p>Message : </p>
+    <div>
+        {{ message|raw }}
+    </div>
+</body>
+
+</html>
