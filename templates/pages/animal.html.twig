@@ -1,13 +1,26 @@
 {% extends 'index.html.twig' %}
 
 {% block main %}
-<h1>Biome: {{ biome }}</h1>
-<p>{{ animal.firstname }}</p>
-<p>{{ animal.race.label }}</p>
-<p>{{ animal.race.species }}</p>
+<div class="container-fluid">
+    <!--Debut Hero -->
+    <div class="animaux-image-hero">
+    <img class="w-100" src="{{ asset ("images/animaux/#{ biome }/race_#{ animal.race.label|lower }.jpg") }}">
+    </div>
+    <!--Fin Hero -->
+    <div class="row justify-content-center mt-5">
+        <div class="col">
+            <h1 class="titre-principal">{{ animal.firstname }}</h1>
+            <h2 class="titre-secondaire">Biome: {{ biome }}</h2>
+        </div>
+        <div class="col">
+            <p>Race: {{ animal.race.label }}</p>
+            <p>Espèce: {{ animal.race.species }}</p>
+        </div>
+<p>Description:</p>
+ <div>{{ animal.race.description|raw }}</div>
 {% for image in animal.Images %}
-<p>{{ image.image }}</p>
+<img class="w-100" src="{{ asset ("images/animaux/#{ biome }/#{ image.Image }") }}">
 {% endfor %}
-
+</div>
 
 {% endblock %}
