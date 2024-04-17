@@ -39,8 +39,7 @@ function postData(data, callback) {
         .catch((error) => console.error(error))
 }
 
-const btnSubmit = document.getElementById('submitReview')
-/*if(btnSubmit){
+if(!!document.getElementById('submitReview')){
+    const btnSubmit = document.getElementById('submitReview')
     btnSubmit.addEventListener("click", addReview)
-}*/
-btnSubmit.addEventListener("click", addReview)
+}
