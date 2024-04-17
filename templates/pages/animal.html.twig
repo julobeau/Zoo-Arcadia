@@ -1,26 +1,44 @@
 {% extends 'index.html.twig' %}
 
 {% block main %}
-<div class="container-fluid">
-    <!--Debut Hero -->
-    <div class="animaux-image-hero">
-    <img class="w-100" src="{{ asset ("images/animaux/#{ biome }/race_#{ animal.race.label|lower }.jpg") }}">
+<div class="container-fluid g-0 animalContainer">
+        <!--Debut Hero -->
+    <div class="animalContainer__animalsImageHero">
+        <img class="w-100 animalContainer__animalsImageHero__image" src="{{ asset ("images/animaux/#{ biome }/race_#{ animal.race.label|lower }.webp") }}">
     </div>
-    <!--Fin Hero -->
-    <div class="row justify-content-center mt-5">
-        <div class="col">
-            <h1 class="titre-principal">{{ animal.firstname }}</h1>
-            <h2 class="titre-secondaire">Biome: {{ biome }}</h2>
+        <!--Fin Hero -->
+    <div class="row justify-content-center animalContainer__IdCard">
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <h1 class=" titre-principal">{{ animal.firstname }}</h1>
+            <p>{{ animal.description }}</p>
+            {% if animal.RapportVeterinaireAnimals %}
+            <p>Etat : {{ animal.RapportVeterinaireAnimals[0].etat }}</p>
+            {% else %}
+            <p>En bonne santé</p>
+            {% endif %}
         </div>
+        {% for image in animal.Images %}
+        <img class="animalContainer__IdCard__photo image-cercle img-fluid col-lg-8 col-md-8 col-sm-6" src="{{ asset ("images/animaux/#{ biome }/#{ image.Image }") }}">
+        {% endfor %}
+    </div>
+    <div class="row fiche m-3 p-3 rounded bg-primary">
         <div class="col">
-            <p>Race: {{ animal.race.label }}</p>
+            <h2 class="titre-secondaire">Race : {{ animal.race.label }}</h2>
             <p>Espèce: {{ animal.race.species }}</p>
+            <p>Biome: {{ biome }}</p>
         </div>
-<p>Description:</p>
- <div>{{ animal.race.description|raw }}</div>
-{% for image in animal.Images %}
-<img class="w-100" src="{{ asset ("images/animaux/#{ biome }/#{ image.Image }") }}">
-{% endfor %}
+        <p>Description:</p>
+        <div>{{ animal.race.description|raw }}</div>
+    </div>
+    <div class="row fiche m-3 p-3 rounded bg-black">
+        <p class="text-primary">Galerie d'images</p>
+        <div class="row animalImageGalery">
+        {% for image in animal.Images %}
+        <div class="col-lg-4 col-sm-12 col-md-6 pb-3">
+            <a href="{{ asset ("images/animaux/#{ biome }/#{ image.Image }") }}" data-toggle="lightbox" data-gallery="{{ animal.firstname }}"><img class="img-fluid" src="{{ asset ("images/animaux/#{ biome }/#{ image.Image }") }}" alt="{{ image.Image }}"></a>
+        </div>
+        {% endfor %}
+        </div>
+    </div
 </div>
-
 {% endblock %}

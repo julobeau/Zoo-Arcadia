@@ -40,6 +40,7 @@ function postData(data, callback) {
 }
 
 const btnSubmit = document.getElementById('submitReview')
-if(btnSubmit){
+/*if(btnSubmit){
     btnSubmit.addEventListener("click", addReview)
-}
+}*/
+btnSubmit.addEventListener("click", addReview)

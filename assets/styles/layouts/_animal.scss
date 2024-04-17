@@ -1,0 +1,33 @@
+.animalContainer{
+    position:relative;
+
+
+    &__animalsImageHero{
+        
+
+        &__image{
+            height: 30rem;
+            object-fit: cover;
+            object-position: 50% 50%;
+            filter: brightness(0.5);
+            opacity: 0.3;
+        }
+    }
+    &__IdCard{
+        position:absolute;
+        width: 80%;
+        top: 0;
+        left:50%;
+        translate: -50% 0;
+        margin-top: 5rem;
+        transform-origin: 50% 50%;
+        
+        &__photo{
+            max-width: 40rem;
+
+            @media screen and (max-width:574px){
+                max-width: 15rem;
+            }
+        }
+    }
+}
