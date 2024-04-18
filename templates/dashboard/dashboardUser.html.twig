@@ -2,7 +2,14 @@
 
 {% block section %}
 <div class="container mt-3">
+<div class="headerUser text-center">
 <h1>Utilisateurs</h1>
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success mt-4">
+        {{ message }}
+    </div>
+{% endfor %}
+</div>
 <div class="container-fluid">
     <div class="formulaire row bg-dark rounded mt-3 py-2 mx-1 justify-content-center">
         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -14,7 +21,28 @@
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse bg-dark" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                    {% if users %}
+                        <ul class="text-primary">
+                        {% for user in users %}
+                        <li class="row">
+                        <div class="col-2">{{ user.firstname }}</div>
+                        <div class="col-2">{{ user.name }}</div>
+                        <div class="col-4">{{ user.email }}</div>
+                        <div class="col-2 text-center">{{ user.roles[0] }}</div>
+                        <div class="col-2 actions">
+                            <div class="row justify-content-end">
+                                <div class="col-auto modify">
+                                    <i class="bi bi-pencil"></i>
+                                </div>
+                                {% if user.roles[0] != 'ROLE_ADMIN' %}
+                                <div class="col-auto delete">
+                                    <i class="bi bi-trash"></i>
+                                </div>
+                                {% endif %}
+                        </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -27,11 +55,6 @@
                 <div id="flush-collapseTwo" class="accordion-collapse collapse bg-dark" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body">
                     <div class="col-lg-6 col-sm-12 col-md-10">
-                    {% for message in app.flashes('success') %}
-                        <div class="alert alert-success mt-4">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
                     {{ form(form) }}
                 </div>
             </div>
