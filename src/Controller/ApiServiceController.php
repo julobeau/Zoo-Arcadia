@@ -67,7 +67,7 @@ class ApiServiceController extends AbstractController
     #[Route('/{id}', name: 'edit', methods: 'PUT')]
     public function edit(int $id): Response
     {
-        //$service = aller chercher service id = $id
+        $service = $this->repository->findOneby(['id' => $id]);
         if(!$service){
             throw new \Exception("Pas de service avec l'id {$id}");
         }
@@ -80,7 +80,7 @@ class ApiServiceController extends AbstractController
     #[Route('/{id}', name: 'delete', methods: 'DELETE')]
     public function delete(int $id): Response
     {
-        //$service = aller chercher restaurant id = $id
+        $service = $this->repository->findOneby(['id' => $id]);
         if(!$service){
             throw new \Exception("Pas de service avec l'id {$id}");
         }

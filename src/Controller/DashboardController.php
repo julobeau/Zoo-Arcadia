@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationType;
+use App\Form\UserRegistrationType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,6 +22,11 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 #[Route('/Dashboard', name: 'app_dashboard')]
 class DashboardController extends AbstractController
 {
+    /**
+     * Display all users
+     *
+     * @return Response
+     */
     #[Route('/', name: '_general')]
     #[IsGranted('ROLE_USER')]
     public function index(): Response
@@ -30,7 +35,17 @@ class DashboardController extends AbstractController
             'controller_name' => 'DashboardController',
         ]);
     }
-
+    /**
+     * Add a new user with form and send mail
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $hasher
+     * @param EntityManagerInterface $manager
+     * @param MailerInterface $mailer
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    
     #[Route('/User', name: '_users', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function user(
@@ -44,7 +59,7 @@ class DashboardController extends AbstractController
         $existingUsers = $userRepository->findAll();
 
         $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(UserRegistrationType::class, $user);
 
         $form->handleRequest($request);
 
@@ -93,6 +108,11 @@ class DashboardController extends AbstractController
             } catch (TransportExceptionInterface $e) {
                 // some error prevented the email sending; display an
                 // error message or try to resend the message
+                $this->addFlash(
+                    'error',
+                    'Quelque chose s\'est mal passé'
+                );
+
             }
 
             return $this->redirectToRoute('app_dashboard_users');
@@ -102,5 +122,40 @@ class DashboardController extends AbstractController
             'users' => $existingUsers,
             'form' => $form->createView()
         ]);
+    }
+
+    #[Route('/User/Edit/{id}', name: '_editUser', methods: ['GET', 'POST'])]
+    public function edit(
+        EntityManagerInterface $manager,
+        UserRepository $userRepository,
+        int $id
+        ): Response
+    {
+        $existingUsers = $userRepository->findAll();
+
+        $user = $userRepository->findOneby(['id' => $id]);
+
+        $form = $this->createForm(UserRegistrationType::class, $user);
+
+        //$form->handleRequest($request);
+
+        return $this->render('dashboard/dashboardEditUser.html.twig', [
+            'users' => $existingUsers,
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    #[Route('/User/delete/{id}', name: '_deleteUser', methods: 'GET')]
+    public function delete(EntityManagerInterface $manager, UserRepository $userRepository, int $id): Response
+    {
+        $user = $userRepository->findOneby(['id' => $id]);
+        if($user){
+            dd($user);
+            /*$manager->remove($user);
+            $manager->flush;*/
+            return $this->redirectToRoute('app_dashboard_users');
+
+            }
     }
 }
