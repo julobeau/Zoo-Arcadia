@@ -26,6 +26,15 @@ class ServiceImage
     #[ORM\Column]
     private ?bool $cover = null;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->cover = true;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

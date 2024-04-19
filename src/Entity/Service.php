@@ -33,10 +33,14 @@ class Service
      */
     #[ORM\OneToMany(targetEntity: ServiceImage::class, mappedBy: 'service', orphanRemoval: true)]
     private Collection $image;
-
+    
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->image = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
