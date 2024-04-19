@@ -10,7 +10,7 @@
     <!--Fin Hero -->
     <!-- Debut liste habitats-->
     {% for service in allService %}
-    <div class="section  presentationService justify-content-around p-3 mt-3 mx-1 mb-3 rounded">
+    <div class="section  presentationService justify-content-around p-3 mt-3 mx-1 mb-3 rounded" id="{{ service.nom|url_encode }}">
         <div class="justify-content-center text-center">
             <h2 class="text-primary">{{ service.nom }}</h2>
             

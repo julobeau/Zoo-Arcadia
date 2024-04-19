@@ -53,7 +53,7 @@ class DefaultController extends AbstractController
                             );
     }
     
-    #[Route('/Services')]
+    #[Route('/Services', name:'services')]
     public function service(ServiceRepository $ServiceRepository): Response
     {
         $allServices = $ServiceRepository->findAll();

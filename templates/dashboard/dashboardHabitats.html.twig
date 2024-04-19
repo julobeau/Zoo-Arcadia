@@ -3,7 +3,7 @@
 {% block section %}
 <div class="container mt-3">
     <div class="headerUser text-center">
-    <h1>Utilisateurs</h1>
+    <h1>Habitats</h1>
     {% for message in app.flashes('success') %}
         <div class="alert alert-success mt-4">
             {{ message }}
@@ -16,34 +16,32 @@
     {% endfor %}
     </div>
     <div class="container-fluid">
-        <div class="formulaire row bg-dark rounded mt-3 py-2 mx-1 justify-content-center">
+        <div class="row bg-dark rounded mt-3 py-2 mx-1 justify-content-center">
             <div class="accordion accordion-flush" id="accordionFlushExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Utilisateurs existants
+                        Habitats existants
                         </button>
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse bg-dark" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                        {% if users %}
+                        {% if habitats %}
                             <ul class="text-primary">
-                            {% for user in users %}
+                            {% for habitat in habitats %}
                             <li class="row">
-                            <div class="col-2">{{ user.firstname }}</div>
-                            <div class="col-2">{{ user.name }}</div>
-                            <div class="col-4">{{ user.email }}</div>
-                            <div class="col-2 text-center">{{ user.roles[0] }}</div>
+                            <div class="col-2">{{ habitat.nom }}</div>
                             <div class="col-2 actions">
                                 <div class="row justify-content-end">
                                     <div class="col-auto modify">
-                                        <a href="{{ path('app_dashboard_users_edit', { id: user.id}) }}"><i class="bi bi-pencil"></i></a>
+                                        <a href="{{ path('services') }}#{{ habitat.nom }}"><i class="bi bi-search"></i></a>
                                     </div>
-                                    {% if user.roles[0] != 'ROLE_ADMIN' %}
+                                    <div class="col-auto modify">
+                                        <a href="{{ path('app_dashboard_services_editService', { id: habitat.id}) }}"><i class="bi bi-pencil"></i></a>
+                                    </div>
                                     <div class="col-auto delete">
-                                        <a href="{{ path('app_dashboard_users_delete', { id: user.id}) }}"><i class="bi bi-trash"></i></a>
+                                        <a href="{{ path('app_dashboard_services_deleteService', { id: habitat.id}) }}"><i class="bi bi-trash"></i></a>
                                     </div>
-                                    {% endif %}
                             </li>
                             {% endfor %}
                             </ul>

@@ -13,8 +13,8 @@
                 Vous êtes sur le point de supprimer un utilisateur.
                 Etes vous sur?
             </div>
-        <a class="btn btn-primary" href="{{ path('app_dashboard_deleteUser_delete', { id: deleteUser.id}) }}">Oui</a>
-        <a class="btn btn-primary" href="{{ path('app_dashboard_users') }}">Non</a>
+        <a class="btn btn-primary" href="{{ path('app_dashboard_users_deleteUser_delete', { id: deleteUser.id}) }}">Oui</a>
+        <a class="btn btn-primary" href="{{ path('app_dashboard_users_add') }}">Non</a>
     </div>
 </div>
 {% endblock %}

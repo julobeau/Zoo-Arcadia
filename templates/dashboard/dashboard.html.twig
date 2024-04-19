@@ -5,22 +5,21 @@
 <div class="container dashboard">
     <div class="dashboard__cards row align-items-center justify-content-around text-center mt-3 mx-1 bg-primary p-2">
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="/Dashboard/User" class="button btn btn-primary bg-black shadow">
+        <a href="{{ path('app_dashboard_users_add') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-person-badge icons text-primary"></i>
         <span class="text-primary">Utilisateurs</span></a>
     {% endif %}
-        <button class="btn btn-primary bg-black shadow" data-category="Services">
+            <a href="{{ path('app_dashboard_services_show') }}" class="button btn btn-primary bg-black shadow">
             <i class="bi bi-shop icons text-primary"></i>
-            <span class="text-primary">Services</span>
-        </button>
-        <button class="btn btn-primary bg-black shadow" data-category="Habitats">
+            <span class="text-primary">Services</span></a>
+
+            <a href="{{ path('app_dashboard_habitats_show') }}" class="button btn btn-primary bg-black shadow">
             <i class="bi bi-globe-europe-africa icons text-primary"></i>
-            <span class="text-primary">Habitats</span>
-        </button>
-        <button class="btn btn-primary bg-black shadow" data-category="Animaux">
+            <span class="text-primary">Habitats</span></a>
+            
+            <a href="#" class="button btn btn-primary bg-black shadow">
             <i class="bi bi-fingerprint icons text-primary"></i>
-            <span class="text-primary">Animaux</span>
-        </button>
+            <span class="text-primary">Animaux</span></a>
     </div>
 
     {% block section %}
