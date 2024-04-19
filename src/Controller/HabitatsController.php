@@ -8,13 +8,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/Habitats')]
+#[Route('/Habitats', name:'habitats_')]
 
 class HabitatsController extends AbstractController
 {
     //public $lesHabitats = ['Savane', 'Jungle', 'Marais'];
 
-    #[Route('/')]
+    /**
+     * Display habitats root page
+     *
+     * @return Response
+     */
+    #[Route('/', name:'home')]
     public function habitats(): Response
     {
         return $this->render('pages/habitats.html.twig',
@@ -22,6 +27,13 @@ class HabitatsController extends AbstractController
         );
     }
 
+    /**
+     * Diaplay specific habitat page
+     *
+     * @param HabitatRepository $HabitatRepository
+     * @param string $habitat
+     * @return Response
+     */
     #[Route('/{habitat}', name: 'habitat_show')]
     public function showHabitat(HabitatRepository $HabitatRepository, string $habitat): Response
     {
@@ -53,19 +65,4 @@ class HabitatsController extends AbstractController
         ]
         );
     }
-
-    /*#[Route('/{habitat}/{animal}', name: 'animal_show')]
-    public function showAnimal(
-        HabitatRepository $HabitatRepository,
-        AnimalRepository $AnimalRepository,
-        string $habitat,
-        string $animal
-        ): Response
-    {
-        
-        $animalData = $AnimalRepository->findOneBy(['firstname' => $animal]);
-    
-
-        return $this->render('pages/animal.html.twig');
-    }*/
 }

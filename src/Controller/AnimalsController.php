@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\AnimalRepository;
-use App\Repository\HabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,9 +11,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AnimalsController extends AbstractController
 {
+    /**
+     * Display animal page
+     *
+     * @param AnimalRepository $AnimalRepository
+     * @param string $habitat
+     * @param string $animal
+     * @return Response
+     */
     #[Route('/{animal}', name: 'animal_show')]
     public function showAnimal(
-        HabitatRepository $HabitatRepository,
         AnimalRepository $AnimalRepository,
         string $habitat,
         string $animal

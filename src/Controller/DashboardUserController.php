@@ -108,6 +108,17 @@ class DashboardUserController extends AbstractController
         ]);
     }
 
+    /**
+     * Modify user with id $id with form
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $hasher
+     * @param EntityManagerInterface $manager
+     * @param MailerInterface $mailer
+     * @param UserRepository $userRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/Edit/{id}', name: '_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -184,6 +195,14 @@ class DashboardUserController extends AbstractController
         ]);
     }
 
+    /**
+     * Display delete confirmation of user with id $id
+     *
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $userRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/delete/{id}', name: '_delete', methods: 'GET')]
     public function delete(
         EntityManagerInterface $manager,
@@ -199,6 +218,14 @@ class DashboardUserController extends AbstractController
         ]);
     }
 
+    /**
+     * delete user with id $id
+     *
+     * @param EntityManagerInterface $manager
+     * @param UserRepository $userRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/delete/delete/{id}', name: '_deleteUser_delete', methods: 'GET')]
     public function deleteBdd(
         EntityManagerInterface $manager,

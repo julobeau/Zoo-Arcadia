@@ -11,6 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
+    /**
+     * display home page
+     *
+     * @param HabitatRepository $HabitatRepository
+     * @param ServiceRepository $ServiceRepository
+     * @param ReviewRepository $reviewRepository
+     * @return Response
+     */
     #[Route('/')]
     public function home(HabitatRepository $HabitatRepository, ServiceRepository $ServiceRepository, ReviewRepository $reviewRepository): Response
     {
@@ -53,6 +61,12 @@ class DefaultController extends AbstractController
                             );
     }
     
+    /**
+     * Display services page
+     *
+     * @param ServiceRepository $ServiceRepository
+     * @return Response
+     */
     #[Route('/Services', name:'services')]
     public function service(ServiceRepository $ServiceRepository): Response
     {
