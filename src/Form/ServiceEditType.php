@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\ImagesHabitat;
 use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -14,8 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
-
-class ServiceAddType extends AbstractType
+class ServiceEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -69,10 +67,11 @@ class ServiceAddType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-primary mt-3'
                 ],
-                'label' => 'Enregistrer'
+                'label' => 'Modifier'
                 ]
             )
-        ;
+    ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -20,7 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class DashboardHabitatsController extends AbstractController
 {
     #[Route('/', name: 'show', methods: ['GET', 'POST'])]
-    public function service(
+    public function show(
         Request $request,
         EntityManagerInterface $manager,
         HabitatRepository $HabitatRepository,
