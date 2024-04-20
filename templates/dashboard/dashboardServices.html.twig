@@ -39,9 +39,11 @@
                                     <div class="col-auto modify">
                                         <a href="{{ path('app_dashboard_services_editService', { id: service.id}) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
                                     </div>
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <div class="col-auto delete">
                                         <a href="{{ path('app_dashboard_services_deleteServiceConfirm', { id: service.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
                                     </div>
+                                    {% endif %}
                             </li>
                             {% endfor %}
                             </ul>

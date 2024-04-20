@@ -2,20 +2,17 @@
 
 namespace App\Form;
 
-use App\Entity\ImagesHabitat;
-use App\Entity\Service;
+use App\Entity\Habitat;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-
-
-class ServiceAddType extends AbstractType
+class HabitatAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -27,6 +24,20 @@ class ServiceAddType extends AbstractType
                     'maxlength' => '50'
                 ],
                 'label' => 'Nom :',
+                'label_attr' => [
+                    'class' => 'form-label text-primary mt-3'
+                ],
+                'constraints' => [
+                    new Assert\NotBlank()
+                ]
+            ])
+            ->add('resume', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '255'
+                ],
+                'label' => 'resumé :',
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
@@ -51,11 +62,13 @@ class ServiceAddType extends AbstractType
             ->add('photo', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'multiple' => 'multiple'
                 ],
                 'label' => 'Photo (Taille maximum 2M):',
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
+                'multiple' =>true,
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
@@ -71,13 +84,14 @@ class ServiceAddType extends AbstractType
                 'label' => 'Enregistrer'
                 ]
             )
+
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Service::class,
+            'data_class' => Habitat::class,
         ]);
     }
 }
