@@ -58,8 +58,8 @@ class DashboardServicesController extends AbstractController
                 $serviceImage->setSlug($filename);
                 $manager->persist($serviceImage);
                 $service->addImage($serviceImage);
-                $manager->persist($service);
             }
+            $manager->persist($service);
             $manager->flush();
 
             $this->addFlash(
@@ -116,7 +116,6 @@ class DashboardServicesController extends AbstractController
                 $serviceImage = new ServiceImage();
                 $serviceImage->setSlug($filename);
                 $service->addImage($serviceImage);
-                dd($service);
                 $manager->persist($serviceImage);
             }
 
