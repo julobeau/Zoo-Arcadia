@@ -143,6 +143,17 @@ class DashboardServicesController extends AbstractController
             );
             return $this->redirectToRoute('app_dashboard_services_show');
         }
+        elseif($form->isSubmitted() && !$form->isValid()){
+            $service = $form->getData();
+            $string = (string) $form->getErrors(true, false);
+
+            $this->addFlash(
+                'error',
+                $string
+            );
+            return $this->redirectToRoute('app_dashboard_services_show');
+        }
+
 
         if($service->getImage()[0]){
             $photo = $service->getImage()[0]->getSlug();
