@@ -59,16 +59,17 @@ class HabitatAddType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('photo', FileType::class, [
+            ->add('photos', FileType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'accept' => 'image/*',
                     'multiple' => 'multiple'
                 ],
                 'label' => 'Photo (Taille maximum 2M):',
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
-                'multiple' =>true,
+                'multiple' => true,
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
@@ -77,6 +78,22 @@ class HabitatAddType extends AbstractType
                 ])
                 ]
             ])
+            /*->add('photo', FileType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label' => 'Photo (Taille maximum 2M):',
+                'label_attr' => [
+                    'class' => 'form-label text-primary mt-3'
+                ],
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Assert\Image([
+                        'maxSize' => '2M'
+                ])
+                ]
+            ])*/
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-3'
@@ -91,6 +108,7 @@ class HabitatAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'sanitize_html' => true,
             'data_class' => Habitat::class,
         ]);
     }

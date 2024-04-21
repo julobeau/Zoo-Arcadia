@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\ExpressionLanguage\Expression;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints\File;
 
 #[Route('/Dashboard/services', name: 'app_dashboard_services_')]
 #[IsGranted(
@@ -37,6 +40,7 @@ class DashboardServicesController extends AbstractController
         EntityManagerInterface $manager,
         ServiceRepository $ServiceRepository,
         ServiceImageRepository $ServiceImageRepository,
+        ValidatorInterface $validator,
     ): Response
     {
 
@@ -70,11 +74,22 @@ class DashboardServicesController extends AbstractController
             return $this->redirectToRoute('app_dashboard_services_show');
 
         }
+        elseif($form->isSubmitted() && !$form->isValid()){
+            $service = $form->getData();
+            $string = (string) $form->getErrors(true, false);
 
+            $this->addFlash(
+                'error',
+                $string
+            );
+            return $this->redirectToRoute('app_dashboard_services_show');
+        }
+        
 
         return $this->render('dashboard/dashboardServiceAdd.html.twig', [
             'services' => $existingServices,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'serviceDescription' => '',
         ]);
     }
     
@@ -128,15 +143,19 @@ class DashboardServicesController extends AbstractController
             );
             return $this->redirectToRoute('app_dashboard_services_show');
         }
-        elseif($form->isSubmitted() && !$form->isValid()) {
-            echo"probleme";
+
+        if($service->getImage()[0]){
+            $photo = $service->getImage()[0]->getSlug();
+        }
+        else{
+            $photo = '';
         }
 
 
         return $this->render('dashboard/dashboardServiceEdit.html.twig', [
             'services' => $existingServices,
             'form' => $form->createView(),
-            'photo' => $service->getImage()[0]->getSlug()
+            'photo' => $photo
         ]);
     }
     

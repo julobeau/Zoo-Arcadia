@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Habitat;
+use App\Entity\ImagesHabitat;
 use App\Form\HabitatAddType;
 use App\Repository\HabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,12 +36,43 @@ class DashboardHabitatsController extends AbstractController
 
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $habitat = $form->getData();
+            //dd($habitat);
+            if ($photo = $form['photos']->getData()) {
+                dd($photo);
+                /*$filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
+                $photo->move($photoDir, $filename);
+                $serviceImage = new ImagesHabitat();
+                $serviceImage->setImage($filename);
+                $manager->persist($serviceImage);
+                $habitat->addImage($serviceImage);*/
+            }
+            dd($habitat);
+            $manager->persist($habitat);
+            $manager->flush();
 
-
+            $this->addFlash(
+                'success',
+                'Le nouveau service a été enregistré.'
+            );
             return $this->redirectToRoute('app_dashboard_habitats_show');
         }
+        
+        elseif($form->isSubmitted() && !$form->isValid()){
+            $habitat = $form->getData();
+            $string = (string) $form->getErrors(true, false);
+
+            $this->addFlash(
+                'error',
+                $string
+            );
+            return $this->redirectToRoute('app_dashboard_habitats_show');
+        }
+
             
 
 

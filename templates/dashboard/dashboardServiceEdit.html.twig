@@ -40,8 +40,12 @@
                             </div>
                         </div>
                         <div class="col-4">
+                        {% if photo %}
                             <p class="text-primary">Image actuelle</p>
                             <img class="img-fluid" src="{{ asset ("images/services/#{ photo }") }}">
+                        {% else %}
+                            <p class="text-primary">Pas de photo associée</p>
+                            {% endif %}
                         </div>
                     </div>
                 <div class="form-group col-12 text-center">

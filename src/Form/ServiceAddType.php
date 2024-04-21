@@ -31,7 +31,9 @@ class ServiceAddType extends AbstractType
                     'class' => 'form-label text-primary mt-3'
                 ],
                 'constraints' => [
-                    new Assert\NotBlank()
+                    new Assert\NotBlank([
+                        'message' => 'Un nom doit être saisi',
+                    ])
                 ]
             ])
             ->add('description', TextareaType::class, [
@@ -45,7 +47,9 @@ class ServiceAddType extends AbstractType
                     'class' => 'form-label text-primary mt-3'
                 ],
                 'constraints' => [
-                    new Assert\NotBlank()
+                    new Assert\NotBlank([
+                        'message' => 'Une description doit être saisie',
+                    ])
                 ]
             ])
             ->add('photo', FileType::class, [
@@ -56,11 +60,19 @@ class ServiceAddType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
+                'error_bubbling' => true,
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
                     new Assert\Image([
-                        'maxSize' => '2M'
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Le fichier ne doit pas dépasser 2Méga',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Seuls les fichiers jpeg, png et webp sont acceptés.'
                 ])
                 ]
             ])
@@ -77,6 +89,7 @@ class ServiceAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'sanitize_html' => true,
             'data_class' => Service::class,
         ]);
     }

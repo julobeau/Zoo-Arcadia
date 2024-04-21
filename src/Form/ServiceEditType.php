@@ -58,7 +58,14 @@ class ServiceEditType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new Assert\Image([
-                        'maxSize' => '2M'
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'Le fichier ne doit pas dépasser 2Méga',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        'mimeTypesMessage' => 'Seuls les fichiers jpeg, png et webp sont acceptés.'
                 ])
                 ]
 
