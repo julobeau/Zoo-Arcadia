@@ -20,15 +20,21 @@ class HabitatsController extends AbstractController
      * @return Response
      */
     #[Route('/', name:'home')]
-    public function habitats(): Response
+    public function habitats(
+        HabitatRepository $HabitatRepository,
+    ): Response
     {
-        return $this->render('pages/habitats.html.twig',
+        $habitatsList = $HabitatRepository->findall();
+
+        return $this->render('pages/habitats.html.twig', [
+            'habitats' => $habitatsList,
+        ]
             
         );
     }
 
     /**
-     * Diaplay specific habitat page
+     * Display specific habitat page
      *
      * @param HabitatRepository $HabitatRepository
      * @param string $habitat
@@ -37,6 +43,7 @@ class HabitatsController extends AbstractController
     #[Route('/{habitat}', name: 'habitat_show')]
     public function showHabitat(HabitatRepository $HabitatRepository, string $habitat): Response
     {
+        $habitatsList = $HabitatRepository->findall();
         $habitatData = $HabitatRepository->findOneBy(['nom' => $habitat]);
         $habitatImages = $habitatData->getHabitat();
         $otherImages = [];
@@ -61,7 +68,8 @@ class HabitatsController extends AbstractController
         'description' => $habitatData->getDescription(),
         'animals' => $habitatData->getAnimals(),
         'imageCover' => $coverImage,
-        'images' => $otherImages
+        'images' => $otherImages,
+        'habitats' => $habitatsList,
         ]
         );
     }
