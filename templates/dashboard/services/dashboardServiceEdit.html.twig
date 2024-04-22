@@ -16,27 +16,15 @@
                     {{ form_errors(form) }}
                 </div>
                     <div class="form-group">
-                        {{ form_label(form.nom) }}
-                        {{ form_widget(form.nom) }}
-                        <div class="form-error">
-                            {{ form_errors(form.nom) }}
-                        </div>
+                        {{ form_row(form.nom) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.description) }}
-                        {{ form_widget(form.description) }}
-                        <div class="form-error">
-                            {{ form_errors(form.description) }}
-                        </div>
+                    {{ form_row(form.description) }}
                     </div>
                     <div class="row align-items-center mt-3">
                         <div class="col-6">
                             <div class="form-group">
-                                {{ form_label(form.photo) }}
-                                {{ form_widget(form.photo) }}
-                                <div class="form-error">
-                                    {{ form_errors(form.photo) }}
-                                </div>
+                                {{ form_row(form.photo) }}
                             </div>
                         </div>
                         <div class="col-4">

@@ -6,6 +6,7 @@ use App\Entity\Habitat;
 use App\Entity\ImagesHabitat;
 use App\Form\HabitatAddType;
 use App\Repository\HabitatRepository;
+use App\Repository\ImagesHabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -53,7 +54,7 @@ class DashboardHabitatsController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Le nouveau service a été enregistré.'
+                'Le nouveau habitat a été enregistré.'
             );
             return $this->redirectToRoute('app_dashboard_habitats_show');
         }
@@ -82,6 +83,7 @@ class DashboardHabitatsController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         HabitatRepository $HabitatRepository,
+        ImagesHabitatRepository $ImagesHabitatRepository,
         int $id
     ): Response
     {
@@ -99,6 +101,10 @@ class DashboardHabitatsController extends AbstractController
                 $filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
                 $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
                 $photo->move($photoDir, $filename);
+                $photosHabitat = $habitat->getHabitat();
+                foreach($photosHabitat as $photo){
+                    $photo->setCover(false);
+                }
                 $habitatImage = new ImagesHabitat();
                 $habitatImage->setImage($filename);
                 $habitatImage->setCover(true);
@@ -110,7 +116,7 @@ class DashboardHabitatsController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'Le nouveau service a été enregistré.'
+                'L\'habitat a été modifié.'
             );
             return $this->redirectToRoute('app_dashboard_habitats_show');
         }
@@ -128,8 +134,22 @@ class DashboardHabitatsController extends AbstractController
             return $this->redirectToRoute('app_dashboard_habitats_show');
         }
 
+        if($habitat->getHabitat()[0]){
+            $photosHabitat = $habitat->getHabitat();
+            foreach($photosHabitat as $photo){
+                if($photo->isCover()){
+                    $photoCover = $photo->getImage();
+                }
+            }
+        }
+        else{
+            $photo = '';
+        }
+
         return $this->render('dashboard/habitats/dashboardHabitatEdit.html.twig', [
+            'habitatSelect' => $habitat,
             'habitatsList' => $existinghabitats,
+            'photo' => $photoCover,
             'form' => $form->createView()
         ]);
     }
@@ -148,10 +168,31 @@ class DashboardHabitatsController extends AbstractController
         $habitat = $HabitatRepository->findOneBy(['id' => $id]);
 
 
-        return $this->render('dashboard/dashboardServicesConfirmDelete.html.twig', [
+        return $this->render('dashboard/habitats/dashboardHabitatsConfirmDelete.html.twig', [
             'habitatsList' => $habitatsList,
             'serviceDelete' => $habitat,
         ]);
     }
+    
+    #[Route('/delete/delete/{id}', name: 'deleteHabitat', methods: ['GET'])]
+    public function delete(
+        Request $request,
+        EntityManagerInterface $manager,
+        HabitatRepository $habitatRepository,
+        int $id
+    ): Response
+    {
+        $habitat = $habitatRepository->findOneBy(['id' => $id]);
 
+        $manager->remove($habitat);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'L\'habitat a été supprimé.'
+        );
+
+        return $this->redirectToRoute('app_dashboard_habitats_show');
+
+    }
 }

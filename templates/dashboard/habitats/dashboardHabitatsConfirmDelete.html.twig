@@ -1,4 +1,4 @@
-{% extends 'dashboard/habitats/dashboardServices.html.twig' %}
+{% extends 'dashboard/habitats/dashboardHabitats.html.twig' %}
 
 {% block action %}
 <div class="accordion-item">
@@ -13,8 +13,8 @@
                 Vous êtes sur le point de supprimer un habitat.
                 Etes vous sûr?
             </div>
-        <a class="btn btn-primary" href="{{ path('app_dashboard_habitats_deleteService', { id: serviceDelete.id}) }}">Oui</a>
-        <a class="btn btn-primary" href="{{ path('app_dashboard_services_show') }}">Non</a>
+        <a class="btn btn-primary" href="{{ path('app_dashboard_habitats_deleteHabitat', { id: serviceDelete.id}) }}">Oui</a>
+        <a class="btn btn-primary" href="{{ path('app_dashboard_habitats_show') }}">Non</a>
     </div>
 </div>
 {% endblock %}
