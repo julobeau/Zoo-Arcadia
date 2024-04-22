@@ -7,6 +7,7 @@ use App\Entity\ServiceImage;
 use App\Form\ServiceAddType;
 use App\Form\ServiceEditType;
 use App\Repository\ServiceRepository;
+use App\Repository\HabitatRepository;
 use App\Repository\ServiceImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -41,10 +42,13 @@ class DashboardServicesController extends AbstractController
         ServiceRepository $ServiceRepository,
         ServiceImageRepository $ServiceImageRepository,
         ValidatorInterface $validator,
+        HabitatRepository $HabitatRepository,
     ): Response
     {
 
         $existingServices = $ServiceRepository->findAll();
+        $habitatsList = $HabitatRepository->findAll();
+
 
         $service = new Service();
         $form = $this->createForm(ServiceAddType::class, $service);
@@ -86,7 +90,8 @@ class DashboardServicesController extends AbstractController
         }
         
 
-        return $this->render('dashboard/dashboardServiceAdd.html.twig', [
+        return $this->render('dashboard/services/dashboardServiceAdd.html.twig', [
+            'habitatsList' => $habitatsList,
             'services' => $existingServices,
             'form' => $form->createView(),
             'serviceDescription' => '',
@@ -107,11 +112,14 @@ class DashboardServicesController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         ServiceRepository $ServiceRepository,
+        HabitatRepository $HabitatRepository,
         int $id
     ): Response
     {
 
         $existingServices = $ServiceRepository->findAll();
+        $habitatsList = $HabitatRepository->findAll();
+
 
         $service = $ServiceRepository->findOneBy(['id' => $id]);
 
@@ -163,7 +171,8 @@ class DashboardServicesController extends AbstractController
         }
 
 
-        return $this->render('dashboard/dashboardServiceEdit.html.twig', [
+        return $this->render('dashboard/services/dashboardServiceEdit.html.twig', [
+            'habitatsList' => $habitatsList,
             'services' => $existingServices,
             'form' => $form->createView(),
             'photo' => $photo
@@ -175,15 +184,19 @@ class DashboardServicesController extends AbstractController
         Request $request,
         EntityManagerInterface $manager,
         ServiceRepository $ServiceRepository,
+        HabitatRepository $HabitatRepository,
         int $id
     ): Response
     {
 
         $existingServices = $ServiceRepository->findAll();
+        $habitatsList = $HabitatRepository->findAll();
+
         $service = $ServiceRepository->findOneBy(['id' => $id]);
 
 
-        return $this->render('dashboard/dashboardServicesConfirmDelete.html.twig', [
+        return $this->render('dashboard/services/dashboardServicesConfirmDelete.html.twig', [
+            'habitatsList' => $habitatsList,
             'services' => $existingServices,
             'serviceDelete' => $service,
         ]);

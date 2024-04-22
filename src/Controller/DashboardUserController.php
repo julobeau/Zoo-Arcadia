@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\HabitatRepository;
 use App\Form\UserRegistrationType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 #[Route('/Dashboard/User', name: 'app_dashboard_users')]
 class DashboardUserController extends AbstractController
 {
+
     /**
      * Add a new user with form and send mail
      *
@@ -39,8 +41,11 @@ class DashboardUserController extends AbstractController
         UserPasswordHasherInterface $hasher,
         EntityManagerInterface $manager,
         MailerInterface $mailer,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        HabitatRepository $HabitatRepository,
     ): Response {
+
+        $habitatsList = $HabitatRepository->findAll();
         $existingUsers = $userRepository->findAll();
 
         $user = new User();
@@ -102,7 +107,8 @@ class DashboardUserController extends AbstractController
             return $this->redirectToRoute('app_dashboard_users_add');
         }
 
-        return $this->render('dashboard/dashboardUserAdd.html.twig', [
+        return $this->render('dashboard/user/dashboardUserAdd.html.twig', [
+            'habitatsList' => $habitatsList,
             'users' => $existingUsers,
             'form' => $form->createView()
         ]);
@@ -126,9 +132,13 @@ class DashboardUserController extends AbstractController
         EntityManagerInterface $manager,
         MailerInterface $mailer,
         UserRepository $userRepository,
+        HabitatRepository $HabitatRepository,
         int $id
-    ): Response {
+    ): Response
+    {
         $existingUsers = $userRepository->findAll();
+        $habitatsList = $HabitatRepository->findAll();
+
 
         $user = $userRepository->findOneby(['id' => $id]);
 
@@ -189,7 +199,8 @@ class DashboardUserController extends AbstractController
             return $this->redirectToRoute('app_dashboard_users_add');
         }
 
-        return $this->render('dashboard/dashboardEditUser.html.twig', [
+        return $this->render('dashboard/user/dashboardEditUser.html.twig', [
+            'habitatsList' => $habitatsList,
             'users' => $existingUsers,
             'form' => $form->createView()
         ]);
@@ -207,12 +218,16 @@ class DashboardUserController extends AbstractController
     public function delete(
         EntityManagerInterface $manager,
         UserRepository $userRepository,
+        HabitatRepository $HabitatRepository,
         int $id
     ): Response {
         $user = $userRepository->findOneby(['id' => $id]);
         $existingUsers = $userRepository->findAll();
+        $habitatsList = $HabitatRepository->findAll();
 
-        return $this->render('dashboard/dashboardDeleteUser.html.twig', [
+
+        return $this->render('dashboard/user/dashboardDeleteUser.html.twig', [
+            'habitatsList' => $habitatsList,
             'users' => $existingUsers,
             'deleteUser' => $user
         ]);

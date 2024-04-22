@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\HabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,9 +19,13 @@ class DashboardController extends AbstractController
      */
     #[Route('/', name: '_general')]
     #[IsGranted('ROLE_USER')]
-    public function index(): Response
+    public function index(
+        HabitatRepository $HabitatRepository,
+    ): Response
     {
+        $habitatsList = $HabitatRepository->findAll();
         return $this->render('dashboard/dashboard.html.twig', [
+            'habitatsList' => $habitatsList,
             'controller_name' => 'DashboardController',
         ]);
     }

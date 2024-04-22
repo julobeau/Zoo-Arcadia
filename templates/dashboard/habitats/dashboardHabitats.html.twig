@@ -26,9 +26,9 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse bg-dark" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                        {% if habitats %}
+                        {% if habitatsList %}
                             <ul class="text-primary">
-                            {% for habitat in habitats %}
+                            {% for habitat in habitatsList %}
                             <li class="row">
                             <div class="col-2">{{ habitat.nom }}</div>
                             <div class="col-2 actions">
@@ -38,11 +38,11 @@
                                     </div>
                                     {% if is_granted('ROLE_ADMIN') %}
                                     <div class="col-auto modify">
-                                        <a href="{{ path('app_dashboard_services_editService', { id: habitat.id}) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
+                                        <a href="{{ path('app_dashboard_habitats_edit', { id: habitat.id}) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
                                     </div>
                                     
                                     <div class="col-auto delete">
-                                        <a href="{{ path('app_dashboard_services_deleteService', { id: habitat.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
+                                        <a href="{{ path('app_dashboard_habitats_deleteConfirm', { id: habitat.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
                                     </div>
                                     {% endif %}
                             </li>
