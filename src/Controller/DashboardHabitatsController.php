@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Habitat;
 use App\Entity\ImagesHabitat;
 use App\Form\HabitatAddType;
+use App\Form\HabitatImageAddType;
+use App\Form\HabitatImageEditType;
 use App\Repository\HabitatRepository;
 use App\Repository\ImagesHabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -101,7 +103,7 @@ class DashboardHabitatsController extends AbstractController
                 $filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
                 $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
                 $photo->move($photoDir, $filename);
-                $photosHabitat = $habitat->getHabitat();
+                $photosHabitat = $ImagesHabitatRepository->findBy(['habitat' => $habitat]);
                 foreach($photosHabitat as $photo){
                     $photo->setCover(false);
                 }
@@ -134,8 +136,8 @@ class DashboardHabitatsController extends AbstractController
             return $this->redirectToRoute('app_dashboard_habitats_show');
         }
 
-        if($habitat->getHabitat()[0]){
-            $photosHabitat = $habitat->getHabitat();
+        if($ImagesHabitatRepository->findBy(['habitat' => $habitat])){
+            $photosHabitat = $ImagesHabitatRepository->findBy(['habitat' => $habitat]);
             foreach($photosHabitat as $photo){
                 if($photo->isCover()){
                     $photoCover = $photo->getImage();
@@ -156,8 +158,6 @@ class DashboardHabitatsController extends AbstractController
 
     #[Route('/delete/{id}', name: 'deleteConfirm', methods: ['GET'])]
     public function confirmDelete(
-        Request $request,
-        EntityManagerInterface $manager,
         HabitatRepository $HabitatRepository,
         int $id
     ): Response
@@ -176,7 +176,6 @@ class DashboardHabitatsController extends AbstractController
     
     #[Route('/delete/delete/{id}', name: 'deleteHabitat', methods: ['GET'])]
     public function delete(
-        Request $request,
         EntityManagerInterface $manager,
         HabitatRepository $habitatRepository,
         int $id
@@ -194,5 +193,83 @@ class DashboardHabitatsController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard_habitats_show');
 
+    }
+    
+    #[Route('/images/edit/{id}', name: 'editImageHabitat', methods: ['GET', 'POST'])]
+    public function editImage(
+        Request $request,
+        EntityManagerInterface $manager,
+        HabitatRepository $HabitatRepository,
+        ImagesHabitatRepository $ImagesHabitatRepository,
+        int $id
+    ): Response
+    {
+
+        $habitatsList = $HabitatRepository->findAll();
+        $habitat = $HabitatRepository->findOneBy(['id' => $id]);
+
+        //$habitatImages = $ImagesHabitatRepository->findBy(['habitat' => $habitat]);
+        $habitatImages = $ImagesHabitatRepository->findAll();
+        //dd($habitatImages);
+
+        $form = $this->createForm(HabitatImageEditType::class, $habitatImages, [
+            'habitat' => $habitat->getId(),
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $habitatImage = $form->getData();
+            $habitatImage->setCover(false);
+            dd($habitatImage);
+        }
+        /*$manager->flush();
+
+        $this->addFlash(
+            'success',
+            'L\'habitat a été supprimé.'
+        );*/
+
+        return $this->render('dashboard/habitats/images/dashboardHabitatImageEdit.html.twig', [
+            //'habitatSelect' => $habitat,
+            'habitatsList' => $habitatsList,
+            'form' => $form->createView()
+        ]);
+    }
+    
+    #[Route('/images/add', name: 'addImageHabitat', methods: ['GET', 'POST'])]
+    public function addImage(
+        Request $request,
+        EntityManagerInterface $manager,
+        HabitatRepository $HabitatRepository,
+    ): Response
+    {
+
+        $habitatsList = $HabitatRepository->findAll();
+        //$habitat = $HabitatRepository->findOneBy(['id' => $id]);
+
+        $habitatImage = new ImagesHabitat();
+
+        $form = $this->createForm(HabitatImageAddType::class, $habitatImage);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $habitatImage = $form->getData();
+            $habitatImage->setCover(false);
+            dd($habitatImage);
+        }
+        /*$manager->flush();
+
+        $this->addFlash(
+            'success',
+            'L\'habitat a été supprimé.'
+        );*/
+
+        return $this->render('dashboard/habitats/images/dashboardHabitatImageAdd.html.twig', [
+            //'habitatSelect' => $habitat,
+            'habitatsList' => $habitatsList,
+            'form' => $form->createView()
+        ]);
     }
 }

@@ -40,11 +40,14 @@
                                     <div class="col-auto modify">
                                         <a href="{{ path('app_dashboard_habitats_edit', { id: habitat.id}) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
                                     </div>
-                                    
                                     <div class="col-auto delete">
                                         <a href="{{ path('app_dashboard_habitats_deleteConfirm', { id: habitat.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
                                     </div>
                                     {% endif %}
+                                    <div class="col-auto addImage">
+                                        <a href="{{ path('app_dashboard_habitats_addImageHabitat') }}"><i class="bi bi-image" title="Ajouter une image"></i></a>
+                                    </div>
+
                             </li>
                             {% endfor %}
                             </ul>
