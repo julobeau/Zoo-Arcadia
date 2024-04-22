@@ -27,7 +27,7 @@ class HabitatsController extends AbstractController
         $habitatsList = $HabitatRepository->findall();
 
         return $this->render('pages/habitats.html.twig', [
-            'habitats' => $habitatsList,
+            'habitatsList' => $habitatsList,
         ]
             
         );
@@ -58,9 +58,6 @@ class HabitatsController extends AbstractController
         $animals = $habitatData->getAnimals();
         foreach($animals as $animal){
             $AnimalImages = $animal->getImages();
-            foreach($AnimalImages as $image){
-                echo $image->getImage();
-            }
         }
         return $this->render('pages/habitat.html.twig',
         ['titreHabitat' => $habitatData->getNom(),
@@ -69,7 +66,7 @@ class HabitatsController extends AbstractController
         'animals' => $habitatData->getAnimals(),
         'imageCover' => $coverImage,
         'images' => $otherImages,
-        'habitats' => $habitatsList,
+        'habitatsList' => $habitatsList,
         ]
         );
     }

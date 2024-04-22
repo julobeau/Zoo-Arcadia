@@ -20,7 +20,11 @@ class DefaultController extends AbstractController
      * @return Response
      */
     #[Route('/')]
-    public function home(HabitatRepository $HabitatRepository, ServiceRepository $ServiceRepository, ReviewRepository $reviewRepository): Response
+    public function home(
+        HabitatRepository $HabitatRepository,
+        ServiceRepository $ServiceRepository,
+        ReviewRepository $reviewRepository
+        ): Response
     {
         $habitats = $HabitatRepository->findAll();
         foreach($habitats as $habitat){
@@ -56,7 +60,8 @@ class DefaultController extends AbstractController
         return $this->render('pages/home.html.twig',
                             ['habitatsImages' => $habitatsImages,
                             'servicesImages' => $servicesImages,
-                            'reviews' => $reviewsByPseudo
+                            'reviews' => $reviewsByPseudo,
+                            'habitatsList' => $habitats
                             ]
                             );
     }
@@ -68,13 +73,17 @@ class DefaultController extends AbstractController
      * @return Response
      */
     #[Route('/Services', name:'services')]
-    public function service(ServiceRepository $ServiceRepository): Response
+    public function service(
+        ServiceRepository $ServiceRepository,
+        HabitatRepository $HabitatRepository,
+        ): Response
     {
         $allServices = $ServiceRepository->findAll();
-        //$imageService = $allServices->getImage();
-        //dd($allServices[2]->getImage()[0]);
-        return $this->render('pages/services.html.twig',
-        ['allService' => $allServices]
+        $habitats = $HabitatRepository->findAll();
+        return $this->render('pages/services.html.twig', [
+            'allService' => $allServices,
+            'habitatsList' => $habitats
+            ]
     );
     }
     

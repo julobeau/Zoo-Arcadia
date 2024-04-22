@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\HabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,9 +10,21 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * Display connexion page
+     *
+     * @param AuthenticationUtils $authenticationUtils
+     * @param HabitatRepository $HabitatRepository
+     * @return Response
+     */
     #[Route(path: '/Connexion', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(
+        AuthenticationUtils $authenticationUtils,
+        HabitatRepository $HabitatRepository,
+        ): Response
     {
+        $habitats = $HabitatRepository->findAll();
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -19,11 +32,17 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
+            'habitatsList' => $habitats,
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
 
+    /**
+     * fonction logout
+     *
+     * @return void
+     */
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {

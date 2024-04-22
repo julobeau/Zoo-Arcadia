@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
+use App\Repository\HabitatRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +14,22 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ContactController extends AbstractController
 {
+    /**
+     * Display contact page and sends Email
+     *
+     * @param Request $request
+     * @param MailerInterface $mailer
+     * @param HabitatRepository $HabitatRepository
+     * @return Response
+     */
     #[Route('/Contact', name:'Contact')]
     public function contact(
         Request $request,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        HabitatRepository $HabitatRepository
         ): Response
     {
+        $habitats = $HabitatRepository->findAll();
         $form = $this->createForm(ContactType::class);
 
         $form->handleRequest($request);
@@ -65,6 +76,7 @@ class ContactController extends AbstractController
         }
         
         return $this->render('pages/contact.html.twig', [
+            'habitatsList' => $habitats,
             'form' => $form->createView()
         ]);
     }
