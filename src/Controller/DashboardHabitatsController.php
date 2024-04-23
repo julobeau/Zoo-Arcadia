@@ -14,7 +14,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 
 #[Route('/Dashboard/habitat', name: 'app_dashboard_habitats_')]
 #[IsGranted('ROLE_USER')]
@@ -275,10 +277,18 @@ class DashboardHabitatsController extends AbstractController
                 }
             }
             elseif($form->getClickedButton() && 'supprimer' === $form->getClickedButton()->getName()) {
+                $filesystem = new Filesystem();
                 $imagesToDelete = $form['image']->getData();
                 foreach($imagesToDelete as $imageDelete){
+                    $filename = $imageDelete->getImage();
+                    $pathFile = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom().'/'.$filename;
                     $manager->remove($imageDelete);
                     $manager->flush();
+                    try{
+                        $filesystem->remove([$pathFile, 'activity.log']);
+                    } catch(IOExceptionInterface $exception){
+                        echo "An error occurred while deleting the file at ".$exception->getPath();
+                    }
                 }
                 $this->addFlash(
                     'success',
