@@ -24,6 +24,15 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DashboardHabitatsController extends AbstractController
 {
+    private $existinghabitats;
+
+    public function __construct(
+        HabitatRepository $HabitatRepository,
+    )
+    {
+        $this->existinghabitats = $HabitatRepository->findAll();
+    }
+
     #[Route('/', name: 'show', methods: ['GET', 'POST'])]
     public function show(
         Request $request,
@@ -31,7 +40,7 @@ class DashboardHabitatsController extends AbstractController
         HabitatRepository $HabitatRepository,
     ): Response
     {
-        $existinghabitats = $HabitatRepository->findAll();
+        //$existinghabitats = $HabitatRepository->findAll();
 
         $habitat = new Habitat();
 
@@ -75,7 +84,7 @@ class DashboardHabitatsController extends AbstractController
         }
 
         return $this->render('dashboard/habitats/dashboardHabitatAdd.html.twig', [
-            'habitatsList' => $existinghabitats,
+            'habitatsList' => $this->existinghabitats,
             'form' => $form->createView()
         ]);
     }
@@ -89,8 +98,6 @@ class DashboardHabitatsController extends AbstractController
         int $id
     ): Response
     {
-        $existinghabitats = $HabitatRepository->findAll();
-
         $habitat = $HabitatRepository->findOneBy(['id' => $id]);
 
         $form = $this->createForm(HabitatAddType::class, $habitat);
@@ -150,7 +157,7 @@ class DashboardHabitatsController extends AbstractController
 
         return $this->render('dashboard/habitats/dashboardHabitatEdit.html.twig', [
             'habitatSelect' => $habitat,
-            'habitatsList' => $existinghabitats,
+            'habitatsList' => $this->existinghabitats,
             'photo' => $photoCover,
             'form' => $form->createView()
         ]);
@@ -163,13 +170,11 @@ class DashboardHabitatsController extends AbstractController
     ): Response
     {
 
-        $habitatsList = $HabitatRepository->findAll();
-
         $habitat = $HabitatRepository->findOneBy(['id' => $id]);
 
 
         return $this->render('dashboard/habitats/dashboardHabitatsConfirmDelete.html.twig', [
-            'habitatsList' => $habitatsList,
+            'habitatsList' => $this->existinghabitats,
             'serviceDelete' => $habitat,
         ]);
     }
@@ -204,25 +209,58 @@ class DashboardHabitatsController extends AbstractController
         int $id
     ): Response
     {
-
-        $habitatsList = $HabitatRepository->findAll();
         $habitat = $HabitatRepository->findOneBy(['id' => $id]);
 
-        //$habitatImages = $ImagesHabitatRepository->findBy(['habitat' => $habitat]);
         $habitatImages = $ImagesHabitatRepository->findAll();
-        //dd($habitatImages);
 
         $form = $this->createForm(HabitatImageEditType::class, $habitatImages, [
             'habitat' => $habitat->getId(),
         ]);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $habitatImage = $form->getData();
-            $habitatImage->setCover(false);
-            dd($habitatImage);
+            if ($form->getClickedButton() && 'add' === $form->getClickedButton()->getName()) {
+                if ($photo = $form['newImage']->getData()) {
+                    $filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                    $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
+                    $photo->move($photoDir, $filename);
+                    $imageHabitat = new ImagesHabitat();
+                    $imageHabitat->setImage($filename);
+                    $imageHabitat->setCover(false);
+                    $imageHabitat->setHabitat($habitat);
+                    $manager->persist($imageHabitat);
+                    $manager->flush();
+                    $this->addFlash(
+                        'success',
+                        'Image ajoutée avec succès'
+                    );
+                    return $this->redirectToRoute('app_dashboard_habitats_editImageHabitat', ['id' => $habitat->getId()]);
+                }
+            }
+            elseif($form->getClickedButton() && 'supprimer' === $form->getClickedButton()->getName()) {
+                $imagesToDelete = $form['image']->getData();
+                foreach($imagesToDelete as $imageDelete){
+                    $manager->remove($imageDelete);
+                    $manager->flush();
+                }
+                $this->addFlash(
+                    'success',
+                    'Image(s) supprimée(s) avec succès'
+                );
+
+                return $this->redirectToRoute('app_dashboard_habitats_editImageHabitat', ['id' => $habitat->getId()]);
+            }
         }
+        elseif($form->isSubmitted() && !$form->isValid()){
+            $string = (string) $form->getErrors(true, false);
+
+            $this->addFlash(
+                'error',
+                $string
+            );
+            return $this->redirectToRoute('app_dashboard_habitats_editImageHabitat', ['id' => $habitat->getId()]);
+        }
+
         /*$manager->flush();
 
         $this->addFlash(
@@ -232,7 +270,8 @@ class DashboardHabitatsController extends AbstractController
 
         return $this->render('dashboard/habitats/images/dashboardHabitatImageEdit.html.twig', [
             //'habitatSelect' => $habitat,
-            'habitatsList' => $habitatsList,
+            'habitatsList' => $this->existinghabitats,
+            'habitat' => $habitat->getNom(),
             'form' => $form->createView()
         ]);
     }
@@ -244,9 +283,6 @@ class DashboardHabitatsController extends AbstractController
         HabitatRepository $HabitatRepository,
     ): Response
     {
-
-        $habitatsList = $HabitatRepository->findAll();
-        //$habitat = $HabitatRepository->findOneBy(['id' => $id]);
 
         $habitatImage = new ImagesHabitat();
 
@@ -268,7 +304,7 @@ class DashboardHabitatsController extends AbstractController
 
         return $this->render('dashboard/habitats/images/dashboardHabitatImageAdd.html.twig', [
             //'habitatSelect' => $habitat,
-            'habitatsList' => $habitatsList,
+            'habitatsList' => $this->existinghabitats,
             'form' => $form->createView()
         ]);
     }

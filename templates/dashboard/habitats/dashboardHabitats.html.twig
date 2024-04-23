@@ -31,7 +31,7 @@
                             {% for habitat in habitatsList %}
                             <li class="row">
                             <div class="col-2">{{ habitat.nom }}</div>
-                            <div class="col-2 actions">
+                            <div class="col-3 actions">
                                 <div class="row justify-content-end">
                                     <div class="col-auto modify">
                                         <a href="/Habitats/{{ habitat.nom }}#habitat"><i class="bi bi-search" title="Visualiser"></i></a>
@@ -44,8 +44,8 @@
                                         <a href="{{ path('app_dashboard_habitats_deleteConfirm', { id: habitat.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
                                     </div>
                                     {% endif %}
-                                    <div class="col-auto addImage">
-                                        <a href="{{ path('app_dashboard_habitats_addImageHabitat') }}"><i class="bi bi-image" title="Ajouter une image"></i></a>
+                                    <div class="col-auto editImage">
+                                        <a href="{{ path('app_dashboard_habitats_editImageHabitat', { id: habitat.id}) }}"><i class="bi bi-image" title="Gérer les images de cet habitat"></i></a>
                                     </div>
 
                             </li>
