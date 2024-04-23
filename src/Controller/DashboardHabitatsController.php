@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Habitat;
 use App\Entity\ImagesHabitat;
 use App\Form\HabitatAddType;
-use App\Form\HabitatImageAddType;
 use App\Form\HabitatImageEditType;
 use App\Repository\HabitatRepository;
 use App\Repository\ImagesHabitatRepository;
@@ -17,8 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-
-
 #[Route('/Dashboard/habitat', name: 'app_dashboard_habitats_')]
 #[IsGranted('ROLE_USER')]
 
@@ -26,6 +23,11 @@ class DashboardHabitatsController extends AbstractController
 {
     private $existinghabitats;
 
+    /**
+     * Get habitats list
+     *
+     * @param HabitatRepository $HabitatRepository
+     */
     public function __construct(
         HabitatRepository $HabitatRepository,
     )
@@ -33,6 +35,14 @@ class DashboardHabitatsController extends AbstractController
         $this->existinghabitats = $HabitatRepository->findAll();
     }
 
+    /**
+     * Create habitat
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param HabitatRepository $HabitatRepository
+     * @return Response
+     */
     #[Route('/', name: 'show', methods: ['GET', 'POST'])]
     public function show(
         Request $request,
@@ -40,7 +50,6 @@ class DashboardHabitatsController extends AbstractController
         HabitatRepository $HabitatRepository,
     ): Response
     {
-        //$existinghabitats = $HabitatRepository->findAll();
 
         $habitat = new Habitat();
 
@@ -89,6 +98,16 @@ class DashboardHabitatsController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit habitat
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param HabitatRepository $HabitatRepository
+     * @param ImagesHabitatRepository $ImagesHabitatRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/edit/{id}', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -179,6 +198,14 @@ class DashboardHabitatsController extends AbstractController
         ]);
     }
     
+    /**
+     * Delete habitat
+     *
+     * @param EntityManagerInterface $manager
+     * @param HabitatRepository $habitatRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/delete/delete/{id}', name: 'deleteHabitat', methods: ['GET'])]
     public function delete(
         EntityManagerInterface $manager,
@@ -200,6 +227,16 @@ class DashboardHabitatsController extends AbstractController
 
     }
     
+    /**
+     * Add/delete images of habitat
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param HabitatRepository $HabitatRepository
+     * @param ImagesHabitatRepository $ImagesHabitatRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/images/edit/{id}', name: 'editImageHabitat', methods: ['GET', 'POST'])]
     public function editImage(
         Request $request,
@@ -261,50 +298,10 @@ class DashboardHabitatsController extends AbstractController
             return $this->redirectToRoute('app_dashboard_habitats_editImageHabitat', ['id' => $habitat->getId()]);
         }
 
-        /*$manager->flush();
-
-        $this->addFlash(
-            'success',
-            'L\'habitat a été supprimé.'
-        );*/
-
         return $this->render('dashboard/habitats/images/dashboardHabitatImageEdit.html.twig', [
             //'habitatSelect' => $habitat,
             'habitatsList' => $this->existinghabitats,
             'habitat' => $habitat->getNom(),
-            'form' => $form->createView()
-        ]);
-    }
-    
-    #[Route('/images/add', name: 'addImageHabitat', methods: ['GET', 'POST'])]
-    public function addImage(
-        Request $request,
-        EntityManagerInterface $manager,
-        HabitatRepository $HabitatRepository,
-    ): Response
-    {
-
-        $habitatImage = new ImagesHabitat();
-
-        $form = $this->createForm(HabitatImageAddType::class, $habitatImage);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $habitatImage = $form->getData();
-            $habitatImage->setCover(false);
-            dd($habitatImage);
-        }
-        /*$manager->flush();
-
-        $this->addFlash(
-            'success',
-            'L\'habitat a été supprimé.'
-        );*/
-
-        return $this->render('dashboard/habitats/images/dashboardHabitatImageAdd.html.twig', [
-            //'habitatSelect' => $habitat,
-            'habitatsList' => $this->existinghabitats,
             'form' => $form->createView()
         ]);
     }
