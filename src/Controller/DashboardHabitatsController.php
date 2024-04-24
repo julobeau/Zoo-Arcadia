@@ -62,8 +62,8 @@ class DashboardHabitatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $habitat = $form->getData();
             if ($photo = $form['photos']->getData()) {
-                $filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
+                $filename = $habitat->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getId();
                 $photo->move($photoDir, $filename);
                 $habitatImage = new ImagesHabitat();
                 $habitatImage->setImage($filename);
@@ -128,8 +128,8 @@ class DashboardHabitatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $habitat = $form->getData();
             if ($photo = $form['photos']->getData()) {
-                $filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
+                $filename = $habitat->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getId();
                 $photo->move($photoDir, $filename);
                 $photosHabitat = $ImagesHabitatRepository->findBy(['habitat' => $habitat]);
                 foreach($photosHabitat as $photo){
@@ -260,8 +260,8 @@ class DashboardHabitatsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->getClickedButton() && 'add' === $form->getClickedButton()->getName()) {
                 if ($photo = $form['newImage']->getData()) {
-                    $filename = $habitat->getNom().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-                    $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom();
+                    $filename = $habitat->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                    $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getId();
                     $photo->move($photoDir, $filename);
                     $imageHabitat = new ImagesHabitat();
                     $imageHabitat->setImage($filename);
@@ -281,7 +281,7 @@ class DashboardHabitatsController extends AbstractController
                 $imagesToDelete = $form['image']->getData();
                 foreach($imagesToDelete as $imageDelete){
                     $filename = $imageDelete->getImage();
-                    $pathFile = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getNom().'/'.$filename;
+                    $pathFile = $this->getParameter('kernel.project_dir').'/assets/images/habitats/'.$habitat->getId().'/'.$filename;
                     $manager->remove($imageDelete);
                     $manager->flush();
                     try{
@@ -311,7 +311,7 @@ class DashboardHabitatsController extends AbstractController
         return $this->render('dashboard/habitats/images/dashboardHabitatImageEdit.html.twig', [
             //'habitatSelect' => $habitat,
             'habitatsList' => $this->existinghabitats,
-            'habitat' => $habitat->getNom(),
+            'habitat' => $habitat->getId(),
             'form' => $form->createView()
         ]);
     }
