@@ -1,0 +1,50 @@
+{% extends 'dashboard/races/dashboardRaces.html.twig' %}
+
+{% block action %}
+{% if is_granted('ROLE_ADMIN') %}
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Editer race
+        </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse bg-dark show" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    {{ form_start(form) }}
+                        {{ form_errors(form) }}
+                        <div class="form-group">
+                            {{ form_label(form.label) }}
+                            {{ form_widget(form.label) }}
+                            <div class="form-error">
+                                {{ form_errors(form.label) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.species) }}
+                            {{ form_widget(form.species) }}
+                            <div class="form-error">
+                                {{ form_errors(form.species) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description) }}
+                            <div class="form-error">
+                                {{ form_errors(form.description) }}
+                            </div>
+                        </div>
+
+                <div class="col-12 text-center">    
+                    <div class="form-group">
+                        {{ form_row(form.submit) }}
+                    </div>
+                </div>    
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %} 

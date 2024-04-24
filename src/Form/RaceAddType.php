@@ -2,9 +2,8 @@
 
 namespace App\Form;
 
-use App\Entity\Habitat;
+use App\Entity\Race;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,18 +11,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class HabitatAddType extends AbstractType
+
+class RaceAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
+            ->add('label', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '2',
-                    'maxlength' => '50'
+                    'maxlength' => '255'
                 ],
-                'label' => 'Nom :',
+                'label' => 'Race :',
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
@@ -31,13 +31,13 @@ class HabitatAddType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('resume', TextType::class, [
+            ->add('species', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '2',
                     'maxlength' => '255'
                 ],
-                'label' => 'resumé :',
+                'label' => 'Espèce :',
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
@@ -59,22 +59,6 @@ class HabitatAddType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('photos', FileType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                ],
-                'label' => 'Photo (Taille maximum 2M):',
-                'label_attr' => [
-                    'class' => 'form-label text-primary mt-3'
-                ],
-                'required' => false,
-                'mapped' => false,
-                'constraints' => [
-                    new Assert\Image([
-                        'maxSize' => '2M'
-                ])
-                ]
-            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-3'
@@ -89,7 +73,7 @@ class HabitatAddType extends AbstractType
     {
         $resolver->setDefaults([
             'sanitize_html' => true,
-            'data_class' => Habitat::class,
+            'data_class' => Race::class,
         ]);
     }
 }
