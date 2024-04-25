@@ -184,6 +184,13 @@ class DashboardHabitatsController extends AbstractController
         ]);
     }
 
+    /**
+     * Display habitat delete confirmation
+     *
+     * @param HabitatRepository $HabitatRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/delete/{id}', name: 'deleteConfirm', methods: ['GET'])]
     public function confirmDelete(
         HabitatRepository $HabitatRepository,
@@ -194,9 +201,9 @@ class DashboardHabitatsController extends AbstractController
         $habitat = $HabitatRepository->findOneBy(['id' => $id]);
 
 
-        return $this->render('dashboard/habitats/dashboardHabitatsConfirmDelete.html.twig', [
+        return $this->render('dashboard/animals/dashboardHabitatsConfirmDelete.html.twig', [
             'habitatsList' => $this->existinghabitats,
-            'serviceDelete' => $habitat,
+            'habitatDelete' => $habitat,
         ]);
     }
     

@@ -3,7 +3,7 @@
 {% block habitat %}
 <div class="hero-{{ titreHabitat }}">
     <div class="imageHabitat row align-items-center text-center pt-3 mx-1 rounded">
-        <img class="w-100 imageHabitat__image rounded" src="{{ asset ("images/habitats/#{ titreHabitat }/#{ imageCover }") }}" alt="image cover {{ titreHabitat }}">
+        <img class="w-100 imageHabitat__image rounded" src="{{ asset ("images/habitats/#{ idHabitat }/#{ imageCover }") }}" alt="image cover {{ titreHabitat }}">
         <h2 class="imageHabitat__titreSecondaire">{{ titreHabitat }}</h2>
     </div>
     <div class="row mt-3 pt-3 text-center">
@@ -12,7 +12,7 @@
     <div class="row mt-3 text-center align-items-center justify-content-center px-3">
     {% for image in images %}
         <div class="col-lg-4 col-sm-12 col-md-6 pb-3">
-            <a href="{{ asset ("images/habitats/#{ titreHabitat }/#{ image }") }}" data-toggle="lightbox" data-gallery="{{ titreHabitat }}"><img class="img-fluid" src="{{ asset ("images/habitats/#{ titreHabitat }/#{ image }") }}" alt="{{ image }}"></a>
+            <a href="{{ asset ("images/habitats/#{ idHabitat }/#{ image }") }}" data-toggle="lightbox" data-gallery="{{ titreHabitat }}"><img class="img-fluid" src="{{ asset ("images/habitats/#{ idHabitat }/#{ image }") }}" alt="{{ image }}"></a>
         </div>
     {% endfor %}
     </div>
@@ -33,7 +33,7 @@
                 <div class="section-animaux_bg-image col-lg-3 col-sm-6 mb-3">
                 {% for image in animal.Images %}
                     {% if image.cover == 1 %}
-                        <img class="w-100 img-animaux rounded-circle" src="{{ asset ("images/animaux/#{ titreHabitat }/#{ image.Image }") }}"/>
+                        <img class="w-100 img-animaux rounded-circle" src="{{ asset ("images/animaux/#{ animal.id }/#{ image.Image }") }}"/>
                     {% endif %}
                 {% endfor %}
                     <a href='/Habitats/{{ titreHabitat }}/{{ animal.firstname }}'><h2 class="section-animaux_nom mt-2">{{ animal.firstname }}</h2></a>

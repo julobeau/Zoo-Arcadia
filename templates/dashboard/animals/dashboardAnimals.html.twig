@@ -51,11 +51,11 @@
                                             <a href="/Habitats/{{ animal.Habitat.nom }}/{{ animal.firstname }}"><i class="bi bi-search" title="Visualiser"></i></a>
                                         </div>
                                         <div class="col-auto modify">
-                                            <a href="{{ path('app_dashboard_services_editService', { id: animal.id }) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
+                                            <a href="{{ path('app_dashboard_animals_edit', { id: animal.id }) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
                                         </div>
                                         {% if is_granted('ROLE_ADMIN') %}
                                         <div class="col-auto delete">
-                                            <a href="{{ path('app_dashboard_services_deleteServiceConfirm', { id: animal.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
+                                            <a href="{{ path('app_dashboard_animals_deleteConfirm', { id: animal.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
                                         </div>
                                         {% endif %}
                                 </li>

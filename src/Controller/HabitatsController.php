@@ -40,11 +40,14 @@ class HabitatsController extends AbstractController
      * @param string $habitat
      * @return Response
      */
-    #[Route('/{habitat}', name: 'habitat_show')]
-    public function showHabitat(HabitatRepository $HabitatRepository, string $habitat): Response
+    #[Route('/{id}', name: 'habitat_show')]
+    public function showHabitat(
+        HabitatRepository $HabitatRepository,
+        int $id,
+        ): Response
     {
         $habitatsList = $HabitatRepository->findall();
-        $habitatData = $HabitatRepository->findOneBy(['nom' => $habitat]);
+        $habitatData = $HabitatRepository->findOneBy(['id' => $id]);
         $habitatImages = $habitatData->getHabitat();
         $otherImages = [];
         foreach($habitatImages as $image){
@@ -61,6 +64,7 @@ class HabitatsController extends AbstractController
         }
         return $this->render('pages/habitat.html.twig',
         ['titreHabitat' => $habitatData->getNom(),
+        'idHabitat' => $habitatData->getId(),
         'accroche' => $habitatData->getResume(),
         'description' => $habitatData->getDescription(),
         'animals' => $habitatData->getAnimals(),

@@ -14,10 +14,10 @@
         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 justify-content-center text-center">
             {% for image in habitat.Habitat %}
                 {% if image.cover == 1 %}
-                    <img class="w-100 img-habitat rounded-circle" src="{{ asset ("images/habitats/#{ habitat.nom }/#{ image.Image }") }}"/>
+                    <img class="w-100 img-habitat rounded-circle" src="{{ asset ("images/habitats/#{ habitat.id }/#{ image.Image }") }}"/>
                 {% endif %}
             {% endfor %}    
-            <a class="btn btn-primary mb-3 btn-habitat" id="savane" href="\Habitats\{{ habitat.nom }}#habitat">Découvrir l'habitat {{ habitat.nom }}</a>
+            <a class="btn btn-primary mb-3 btn-habitat" id="savane" href="\Habitats\{{ habitat.id }}#habitat">Découvrir l'habitat {{ habitat.nom }}</a>
         </div>
     {% endfor %}
     </div>

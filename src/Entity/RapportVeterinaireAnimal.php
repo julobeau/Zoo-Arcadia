@@ -33,6 +33,14 @@ class RapportVeterinaireAnimal
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
