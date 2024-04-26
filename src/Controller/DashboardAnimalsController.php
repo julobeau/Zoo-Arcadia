@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\ImagesAnimaux;
+use App\Entity\RapportVeterinaireAnimal;
 use App\Form\AnimalAddType;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
@@ -98,7 +99,14 @@ class DashboardAnimalsController extends AbstractController
                 $animal->addImage($animalImage);
                 //dd($animal);
             }
-            //dd($animal);
+            $rapportInitial = new RapportVeterinaireAnimal;
+            $rapportInitial->setEtat("Rapport initial");
+            $rapportInitial->setNourriture("");
+            $rapportInitial->setQuantiteNourriture(0);
+
+            $manager->persist($rapportInitial);
+
+            $animal->addRapportVeterinaireAnimal($rapportInitial);
 
             $manager->persist($animal);
             $manager->flush();
@@ -117,6 +125,16 @@ class DashboardAnimalsController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit an animal
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param AnimalRepository $AnimalRepository
+     * @param ImagesAnimauxRepository $ImagesAnimauxRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/edit/{id}', name: 'edit', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function edit(

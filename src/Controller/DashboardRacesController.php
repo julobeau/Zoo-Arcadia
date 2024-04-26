@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Race;
 use App\Form\AnimalAddType;
 use App\Form\RaceAddType;
+use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Repository\RaceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,6 +56,13 @@ class DashboardRacesController extends AbstractController
         ]);
     }
 
+    /**
+     * Create a new race
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/add', name: 'add', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function add(
@@ -69,6 +77,12 @@ class DashboardRacesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $race = $form->getData();
+            if ($photo = $form['photos']->getData()) {
+                $filename = 'race_'.strtolower($race->getLabel()).'.'.$photo->guessExtension();
+                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/races/';
+                $photo->move($photoDir, $filename);
+            }
+
             $manager->persist($race);
             $manager->flush();
 
@@ -88,6 +102,15 @@ class DashboardRacesController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit a race
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param RaceRepository $RaceRepository
+     * @param integer $id
+     * @return Response
+     */
     #[Route('/edit/{id}', name: 'edit', methods:['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function edit(
@@ -104,6 +127,12 @@ class DashboardRacesController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $race = $form->getData();
+            if ($photo = $form['photos']->getData()) {
+                $filename = 'race_'.strtolower($race->getLabel()).'.'.$photo->guessExtension();
+                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/races/';
+                $photo->move($photoDir, $filename);
+            }
+
             $manager->persist($race);
             $manager->flush();
 
@@ -121,5 +150,67 @@ class DashboardRacesController extends AbstractController
             'races' => $this->raceList,
 
         ]);
+    }
+
+    /**
+     * Display race delete confirmation if there is no animal with this race
+    *
+     * @param RaceRepository $RaceRepository
+     * @param AnimalRepository $AnimalRepository
+     * @param integer $id
+     * @return Response
+     */
+    #[Route('/delete/{id}', name: 'deleteConfirm', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function confirmDelete(
+        RaceRepository $RaceRepository,
+        AnimalRepository $AnimalRepository,
+        int $id
+    ): Response
+    {
+
+        $race = $RaceRepository->findOneBy(['id' => $id]);
+        if(!empty($AnimalRepository->findBy(['race' => $race]))){
+            $this->addFlash(
+                'error',
+                'La race contient des animaux. Impossible de la supprimer'
+            );
+            return $this->redirectToRoute('app_dashboard_races_show');
+        };
+
+        return $this->render('dashboard/racaes/dashboardRaceConfirmDelete.html.twig', [
+            'habitatsList' => $this->existinghabitats,
+            'races' => $this->raceList,
+            'raceDelete' => $race,
+        ]);
+    }
+
+    /**
+     * Delete race
+     *
+     * @param EntityManagerInterface $manager
+     * @param HabitatRepository $habitatRepository
+     * @param integer $id
+     * @return Response
+     */
+    #[Route('/delete/delete/{id}', name: 'deleteRace', methods: ['GET'])]
+    public function delete(
+        EntityManagerInterface $manager,
+        RaceRepository $RaceRepository,
+        int $id
+    ): Response
+    {
+        $race = $RaceRepository->findOneBy(['id' => $id]);
+
+        $manager->remove($race);
+        $manager->flush();
+
+        $this->addFlash(
+            'success',
+            'La race a été supprimé.'
+        );
+
+        return $this->redirectToRoute('app_dashboard_races_show');
+
     }
 }

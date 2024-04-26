@@ -39,7 +39,7 @@
                                         </div>
                                         {% if is_granted('ROLE_ADMIN') %}
                                         <div class="col-auto delete">
-                                            <a href="#"><i class="bi bi-trash" title="Supprimer"></i></a>
+                                            <a href="{{ path('app_dashboard_races_deleteConfirm', {id: race.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>
                                         </div>
                                         {% endif %}
                                 </li>

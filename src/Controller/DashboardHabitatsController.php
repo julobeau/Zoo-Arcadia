@@ -6,6 +6,7 @@ use App\Entity\Habitat;
 use App\Entity\ImagesHabitat;
 use App\Form\HabitatAddType;
 use App\Form\HabitatImageEditType;
+use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Repository\ImagesHabitatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -194,14 +195,22 @@ class DashboardHabitatsController extends AbstractController
     #[Route('/delete/{id}', name: 'deleteConfirm', methods: ['GET'])]
     public function confirmDelete(
         HabitatRepository $HabitatRepository,
+        AnimalRepository $AnimalRepository,
         int $id
     ): Response
     {
 
         $habitat = $HabitatRepository->findOneBy(['id' => $id]);
+        if(!empty($AnimalRepository->findBy(['habitat' => $habitat]))){
+            $this->addFlash(
+                'error',
+                'L\'habitat contient des animaux. Impossible de le supprimer'
+            );
+            return $this->redirectToRoute('app_dashboard_habitats_show');
+        };
 
 
-        return $this->render('dashboard/animals/dashboardHabitatsConfirmDelete.html.twig', [
+        return $this->render('dashboard/habitats/dashboardHabitatsConfirmDelete.html.twig', [
             'habitatsList' => $this->existinghabitats,
             'habitatDelete' => $habitat,
         ]);
