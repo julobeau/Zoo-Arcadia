@@ -6,6 +6,7 @@ use App\Entity\Animal;
 use App\Entity\ImagesAnimaux;
 use App\Entity\RapportVeterinaireAnimal;
 use App\Form\AnimalAddType;
+use App\Form\AnimalImageEditType;
 use App\Repository\AnimalRepository;
 use App\Repository\HabitatRepository;
 use App\Repository\ImagesAnimauxRepository;
@@ -16,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Path;
 
 
 #[Route('/Dashboard/animals', name: 'app_dashboard_animals_')]
@@ -261,5 +265,93 @@ class DashboardAnimalsController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard_animals_show');
 
+    }
+
+    /**
+     * Add/delete aniaml images
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @param AnimalRepository $AnimalRepository
+     * @param ImagesAnimauxRepository $ImagesAnimauxRepository
+     * @param integer $id
+     * @return Response
+     */
+    #[Route('/images/edit/{id}', name: 'editImageAnimal', methods: ['GET', 'POST'])]
+    public function editImage(
+        Request $request,
+        EntityManagerInterface $manager,
+        AnimalRepository $AnimalRepository,
+        ImagesAnimauxRepository $ImagesAnimauxRepository,
+        int $id
+    ): Response
+    {
+        $animal = $AnimalRepository->findOneBy(['id' => $id]);
+
+        $animalImages = $ImagesAnimauxRepository->findAll();
+
+        $form = $this->createForm(AnimalImageEditType::class, $animalImages, [
+            'animal' => $animal->getId(),
+        ]);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->getClickedButton() && 'add' === $form->getClickedButton()->getName()) {
+                if ($photo = $form['newImage']->getData()) {
+                    $filename = $animal->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
+                    $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/animaux/'.$animal->getId();
+                    $photo->move($photoDir, $filename);
+                    $imageAnimal = new ImagesAnimaux();
+                    $imageAnimal->setImage($filename);
+                    $imageAnimal->setCover(false);
+                    $imageAnimal->setAnimal($animal);
+                    $manager->persist($imageAnimal);
+                    $manager->flush();
+                    $this->addFlash(
+                        'success',
+                        'Image ajoutée avec succès'
+                    );
+                    return $this->redirectToRoute('app_dashboard_animals_editImageAnimal', ['id' => $animal->getId()]);
+                }
+            }
+            elseif($form->getClickedButton() && 'supprimer' === $form->getClickedButton()->getName()) {
+                $filesystem = new Filesystem();
+                $imagesToDelete = $form['image']->getData();
+                foreach($imagesToDelete as $imageDelete){
+                    $filename = $imageDelete->getImage();
+                    $pathFile = $this->getParameter('kernel.project_dir').'/assets/images/animaux/'.$animal->getId().'/'.$filename;
+                    $manager->remove($imageDelete);
+                    $manager->flush();
+                    try{
+                        $filesystem->remove([$pathFile, 'activity.log']);
+                    } catch(IOExceptionInterface $exception){
+                        echo "An error occurred while deleting the file at ".$exception->getPath();
+                    }
+                }
+                $this->addFlash(
+                    'success',
+                    'Image(s) supprimée(s) avec succès'
+                );
+
+                return $this->redirectToRoute('app_dashboard_animals_editImageAnimal', ['id' => $animal->getId()]);
+            }
+        }
+        elseif($form->isSubmitted() && !$form->isValid()){
+            $string = (string) $form->getErrors(true, false);
+
+            $this->addFlash(
+                'error',
+                $string
+            );
+            return $this->redirectToRoute('app_dashboard_animals_editImageAnimal', ['id' => $animal->getId()]);
+        }
+
+        return $this->render('dashboard/animals/dashboardAnimalImageEdit.html.twig', [
+            //'habitatSelect' => $habitat,
+            'habitatsList' => $this->existinghabitats,
+            'animals' => $this->animalsList,
+            'animal' => $animal,
+            'form' => $form->createView()
+        ]);
     }
 }

@@ -327,7 +327,7 @@ class DashboardHabitatsController extends AbstractController
         return $this->render('dashboard/habitats/images/dashboardHabitatImageEdit.html.twig', [
             //'habitatSelect' => $habitat,
             'habitatsList' => $this->existinghabitats,
-            'habitat' => $habitat->getId(),
+            'habitat' => $habitat,
             'form' => $form->createView()
         ]);
     }

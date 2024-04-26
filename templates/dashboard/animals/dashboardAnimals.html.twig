@@ -53,6 +53,10 @@
                                         <div class="col-auto modify">
                                             <a href="{{ path('app_dashboard_animals_edit', { id: animal.id }) }}"><i class="bi bi-pencil" title="Modifier"></i></a>
                                         </div>
+                                    <div class="col-auto editImage">
+                                        <a href="{{ path('app_dashboard_animals_editImageAnimal', { id: animal.id}) }}"><i class="bi bi-image" title="Gérer les images de cet animal"></i></a>
+                                    </div>
+
                                         {% if is_granted('ROLE_ADMIN') %}
                                         <div class="col-auto delete">
                                             <a href="{{ path('app_dashboard_animals_deleteConfirm', { id: animal.id}) }}"><i class="bi bi-trash" title="Supprimer"></i></a>

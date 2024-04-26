@@ -21,7 +21,9 @@
             {% endif %}
         </div>
         {% for image in animal.Images %}
-        <img class="animalContainer__IdCard__photo image-cercle img-fluid col-lg-8 col-md-8 col-sm-6" src="{{ asset ("images/animaux/#{ animal.id }/#{ image.Image }") }}">
+            {% if image.cover == true %}
+                <img class="animalContainer__IdCard__photo image-cercle img-fluid col-lg-8 col-md-8 col-sm-6" src="{{ asset ("images/animaux/#{ animal.id }/#{ image.Image }") }}">
+            {% endif %}
         {% endfor %}
     </div>
     <div class="row fiche m-3 p-3 rounded bg-primary">

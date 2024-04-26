@@ -148,7 +148,7 @@ class DashboardRacesController extends AbstractController
             'habitatsList' => $this->existinghabitats,
             'form' => $form->createView(),
             'races' => $this->raceList,
-
+            'race' => $race,
         ]);
     }
 

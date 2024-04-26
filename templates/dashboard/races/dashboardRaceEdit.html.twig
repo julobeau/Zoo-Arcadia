@@ -45,7 +45,13 @@
                             </div>
                         </div>
                     </div>
-                </div>                <div class="col-12 text-center">    
+                    <div class="col-4">
+                        <p class="text-primary">Image actuelle</p>
+                        <img class="img-fluid" src="{{ asset ("images/animaux/races/race_#{ race.label|lower }.webp") }}">
+                    </div>
+
+                </div>
+                <div class="col-12 text-center">    
                     <div class="form-group">
                         {{ form_row(form.submit) }}
                     </div>

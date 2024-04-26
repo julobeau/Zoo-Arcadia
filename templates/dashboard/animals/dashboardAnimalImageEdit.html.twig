@@ -1,11 +1,11 @@
-{% extends 'dashboard/habitats/dashboardHabitats.html.twig' %}
+{% extends 'dashboard/animals/dashboardAnimals.html.twig' %}
 
 {% block action %}
 {% if is_granted('ROLE_ADMIN') %}
 <div class="accordion-item">
     <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        Gérer les images de l'habitat {{ habitat.nom }}
+        Gérer les images de l'animal {{ animal.firstname }}
         </button>
     </h2>
     <div id="flush-collapseTwo" class="accordion-collapse collapse bg-dark show" data-bs-parent="#accordionFlushExample">
@@ -18,7 +18,7 @@
                         {% for label, value in field_choices(form.image) %}
                         <div class="col-3">
                         <input type="checkbox" id="{{ form.image.vars.id }}_{{ value }}" name="{{ field_name(form.image) }}[]" value="{{ value }}">
-                        <label for="{{ field_name(form.image) }}"><img class="img-fluid" src="{{ asset("images/habitats/#{habitat.id}/#{label}") }}"></label>
+                        <label for="{{ field_name(form.image) }}"><img class="img-fluid" src="{{ asset("images/animaux/#{animal.id}/#{label}") }}"></label>
                         </div>
                         {% endfor %}
                     </div>
