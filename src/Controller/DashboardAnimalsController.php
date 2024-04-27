@@ -29,10 +29,13 @@ class DashboardAnimalsController extends AbstractController
     private $existinghabitats;
     private $animalsList;
 
+
     /**
-     * Get habitats list
+     * Get habitats and animals lists -- initialize security
      *
      * @param HabitatRepository $HabitatRepository
+     * @param AnimalRepository $AnimalRepository
+     * @param Security $security
      */
     public function __construct(
         HabitatRepository $HabitatRepository,

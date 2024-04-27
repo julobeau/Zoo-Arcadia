@@ -1,0 +1,89 @@
+{% extends 'dashboard/dashboard.html.twig' %}
+
+{% block section %}
+<div class="container mt-3">
+    <div class="headerUser text-center">
+    <h1>Rapports animaux</h1>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
+    </div>
+    <div class="container-fluid">
+        <div class="row bg-dark rounded mt-3 py-2 mx-1 justify-content-center">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Rapports existants
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse bg-dark show" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="row justify-content-center">
+                                <span class="col text-primary">Options de tri</span>
+                                <div class="col dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Date
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    {% for date in datesRapports %}
+                                        <li><a class="dropdown-item" href="#">{{ date }}</a></li>
+                                    {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Animal
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    {% for animal in animalsList %}
+                                        <li><a class="dropdown-item" href="#">{{ animal.firstname }}</a></li>
+                                    {% endfor %}
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                        {% if rapports %}
+                            <ul class="text-primary mt-3">
+                                <li class="row mb-1">
+                                    <div class="col-2 fw-bold">Date</div>
+                                    <div class="col-2 fw-bold">Animal</div>
+                                    <div class="col-2 fw-bold">Etat</div>
+                                    <div class="col-2 row justify-content-end fw-bold">Actions</div>
+                                </li>
+                            {% for rapport in rapports %}
+                                <li class="row">
+                                    <div class="col-2">{{ rapport.date|date("d/m/Y") }}</div>
+                                    <div class="col-2">{{ rapport.Animal.firstname }}</div>
+                                    <div class="col-2">{{ rapport.etat }}</div>
+
+                                    <div class="col-2 actions">
+                                        <div class="row justify-content-end">
+                                            <div class="col-auto modify">
+                                                <a href="/Habitats/{{ rapport.Animal.Habitat.nom }}/{{ rapport.Animal.firstname }}"><i class="bi bi-search" title="Visualiser"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% block action %}
+                
+                {% endblock %}   
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
