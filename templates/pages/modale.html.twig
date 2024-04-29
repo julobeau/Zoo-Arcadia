@@ -29,7 +29,7 @@
                     <label for="inputComment" class="form-label">Votre commentaire</label>
                     <textarea class="form-control" id="inputComment" name="Comment" rows="3"></textarea>
                 </div>
-                <button type="button" class="btn btn-secondary" id="submitReview">Submit</button>
+                <button type="button" class="btn btn-secondary" id="submitReview"  {{ stimulus_controller('add-review') }}>Submit</button>
                 </form>
             </div>
             <div class="modal-footer">

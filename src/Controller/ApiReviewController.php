@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
 
 #[Route('/api/review', name:'app_api_review_')]
 class ApiReviewController extends AbstractController
@@ -19,18 +20,22 @@ class ApiReviewController extends AbstractController
         private EntityManagerInterface $manager,
         private ReviewRepository $repository,
         private SerializerInterface $serializer,
+        private HtmlSanitizerInterface $htmlSanitizer,
         )
     {
     }
     #[Route(name: 'new', methods:['POST'] )]
-    public function addReview(Request $request): Response
+    public function addReview(
+        Request $request,
+        HtmlSanitizerInterface $htmlSanitizer,
+        ): Response
     {
         $reviewPosted = $request->toArray();
         $reviewNote = (int)$reviewPosted['Note'];
         $review = new Review();
-        $review->setPseudo($reviewPosted['Pseudo'])
+        $review->setPseudo($htmlSanitizer->sanitize($reviewPosted['Pseudo']))
                 ->setNote($reviewNote)
-                ->setComment($reviewPosted['Comment'])
+                ->setComment($htmlSanitizer->sanitize($reviewPosted['Comment']))
                 ->setCreatedAt(new \DateTimeImmutable())
                 ->setValidated(false);
 
