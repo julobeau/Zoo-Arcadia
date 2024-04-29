@@ -27,7 +27,6 @@
                     <div id="flush-collapseOne" class="accordion-collapse collapse bg-dark show" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <div class="row justify-content-center">
-                                <p class="text-primary fs-2 fw-bold">Rapports animaux</p>
                                 <span class="col text-primary">Options de tri</span>
                                 <div class="col dropdown">
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -57,17 +56,19 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="rapports">
-                                {% if rapportsHabitats %}
+                            <div class="rapports overflow-x-hidden overflow-y-auto h-25">
+                            <p class="text-primary fs-2 fw-bold">Rapports animaux</p>
+
+                                {% if rapportsAnimals %}
                                 <ul class="text-primary mt-3">
-                                    <li class="row mb-1">
+                                    <li class="row mb-1 justify-content-around">
                                         <div class="col-2 fw-bold">Date</div>
                                         <div class="col-2 fw-bold">Animal</div>
                                         <div class="col-2 fw-bold">Etat</div>
                                         <div class="col-2 row justify-content-end fw-bold">Actions</div>
                                     </li>
                                 {% for rapport in rapportsAnimals %}
-                                    <li class="row" data-report="{{ rapport.id }}">
+                                    <li class="row justify-content-around mt-1" data-report="{{ rapport.id }}">
                                         <div class="col-2" data-reportDate="{{ rapport.date|date("d/m/Y") }}">{{ rapport.date|date("d/m/Y") }}</div>
                                         <div class="col-2" data-reportAnimal="{{ rapport.Animal.firstname }}">{{ rapport.Animal.firstname }}</div>
                                         <div class="col-2">{{ rapport.etat }}</div>
@@ -78,8 +79,13 @@
                                                     <a href="/Habitats/{{ rapport.Animal.Habitat.nom }}/{{ rapport.Animal.firstname }}"><i class="bi bi-search" title="Visualiser animal"></i></a>
                                                 </div>
                                                 <div class="col-auto modify">
-                                                    <a href="/Habitats/{{ rapport.Animal.Habitat.nom }}/{{ rapport.Animal.firstname }}"><i class="bi bi-journal-text" title="Consulter le rapport"></i></a>
+                                                    <a href="/dashboard/rapport/veterinaire/animal/{{ rapport.id }}"><i class="bi bi-journal-text" title="Consulter le rapport"></i></a>
                                                 </div>
+                                                {#% if is_granted('ROLE_VETO') %#}
+                                                <div class="col-auto modify">
+                                                    <a href="/Habitats/{{ rapport.Animal.Habitat.nom }}/{{ rapport.Animal.firstname }}"><i class="bi bi-journal" title="Rédiger un rapport"></i></a>
+                                                </div>
+                                                {#% endif %#}
                                             </div>
                                         </div>
                                     </li>
@@ -90,14 +96,14 @@
                                     <p class="text-primary fs-2 fw-bold">Rapports habitats</p>
                                 {% if rapportsHabitats %}
                                 <ul class="text-primary mt-3">
-                                    <li class="row mb-1">
+                                    <li class="row mb-1 justify-content-around">
                                         <div class="col-2 fw-bold">Date</div>
                                         <div class="col-2 fw-bold">Habitat</div>
                                         <div class="col-2 fw-bold">Etat</div>
                                         <div class="col-2 row justify-content-end fw-bold">Actions</div>
                                     </li>
                                 {% for rapport in rapportsHabitats %}
-                                    <li class="row" data-report="{{ rapport.id }}">
+                                    <li class="row justify-content-around mt-1" data-report="{{ rapport.id }}">
                                         <div class="col-2" data-reportDate="{{ rapport.createdAt|date("d/m/Y") }}">{{ rapport.createdAt|date("d/m/Y") }}</div>
                                         <div class="col-2" data-reportAnimal="{{ rapport.Habitat.nom }}">{{ rapport.Habitat.nom }}</div>
                                         <div class="col-2">{{ rapport.etat }}</div>
@@ -105,11 +111,16 @@
                                         <div class="col-2 actions">
                                             <div class="row justify-content-end">
                                                 <div class="col-auto modify">
-                                                    <a href="/Habitats/{{ rapport.Habitat.id }}"><i class="bi bi-search" title="Visualiser animal"></i></a>
+                                                    <a href="/Habitats/{{ rapport.Habitat.id }}"><i class="bi bi-search" title="Visualiser habitat"></i></a>
                                                 </div>
                                                 <div class="col-auto modify">
-                                                    <a href="/Habitats/{{ rapport.Habitat.nom }}"><i class="bi bi-journal-text" title="Consulter le rapport"></i></a>
+                                                    <a href="/dashboard/rapport/veterinaire/habitat/{{ rapport.id }}"><i class="bi bi-journal-text" title="Consulter le rapport"></i></a>
                                                 </div>
+                                                {#% if is_granted('ROLE_VETO') %#}
+                                                <div class="col-auto modify">
+                                                    <a href="/Habitats/{{ rapport.Habitat.nom }}"><i class="bi bi-journal" title="Rédiger un rapport"></i></a>
+                                                </div>
+                                                {#% endif %#}
                                             </div>
                                         </div>
                                     </li>

@@ -40,7 +40,7 @@ class Habitat
     /**
      * @var Collection<int, RapportVeterinaireHabitat>
      */
-    #[ORM\OneToMany(targetEntity: RapportVeterinaireHabitat::class, mappedBy: 'relation', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: RapportVeterinaireHabitat::class, mappedBy: 'habitat', orphanRemoval: true)]
     private Collection $report;
 
     public function __construct()
@@ -163,7 +163,7 @@ class Habitat
     {
         if (!$this->report->contains($report)) {
             $this->report->add($report);
-            $report->setRelation($this);
+            $report->setHabitat($this);
         }
 
         return $this;
@@ -173,8 +173,8 @@ class Habitat
     {
         if ($this->report->removeElement($report)) {
             // set the owning side to null (unless already changed)
-            if ($report->getRelation() === $this) {
-                $report->setRelation(null);
+            if ($report->getHabitat() === $this) {
+                $report->setHabitat(null);
             }
         }
 

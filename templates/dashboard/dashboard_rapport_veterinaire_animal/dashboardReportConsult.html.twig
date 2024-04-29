@@ -1,0 +1,24 @@
+{% extends 'dashboard/dashboard_rapport_veterinaire_animal/dashboardReport.html.twig' %}
+
+{% block action %}
+{% if is_granted('ROLE_ADMIN') %}
+<div class="accordion-item">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Rapport n°{{ rapport.id }} concernant l'{{ reportType }} {{ reportType == 'animal' ? rapport.Animal.firstname : rapport.Habitat.nom }}
+
+        </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse bg-dark show" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+        <p class="text-primary"> <span class="fw-bold">Date : </span>{{ reportType == 'animal' ? rapport.date|date("d/m/Y H:i") : rapport.createdAt|date("d/m/Y H:i") }}</p>
+        <p class="text-primary"> <span class="fw-bold">Etat : </span>{{ rapport.etat }}</p>
+        <p class="text-primary"> <span class="fw-bold">Rapport détaillé : </span>{{ rapport.rapport }}</p>
+        {% if reportType == 'animal' %}
+        <p class="text-primary"> <span class="fw-bold">Nourriture prescrite : </span>{{ rapport.nourriture }}</p>
+        <p class="text-primary"> <span class="fw-bold">Quantité de nourriture prescrite : </span>{{ rapport.quantitenourriture }} grammes ( {{ rapport.quantitenourriture/1000 }}kg )</p>
+        {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
