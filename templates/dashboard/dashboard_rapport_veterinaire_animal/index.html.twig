@@ -32,9 +32,10 @@
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Date
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu" id="filterDates" {{ stimulus_controller('filter-date') }}>
+                                    <li><a class="dropdown-item" href="#" data-date="all">Toutes les dates</a></li>
                                     {% for date in datesRapports %}
-                                        <li><a class="dropdown-item" href="#">{{ date }}</a></li>
+                                        <li><a class="dropdown-item" href="#" data-date="{{ date }}">{{ date }}</a></li>
                                     {% endfor %}
                                     </ul>
                                 </div>
@@ -42,9 +43,10 @@
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Animal
                                     </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu" id="filterAnimal" {{ stimulus_controller('filter-animal') }}>
+                                    <li><a class="dropdown-item" href="#" data-animal="tous" >Tous les animaux</a></li>
                                     {% for animal in animalsList %}
-                                        <li><a class="dropdown-item" href="#">{{ animal.firstname }}</a></li>
+                                        <li ><a class="dropdown-item" href="#" data-animal="{{ animal.firstname }}">{{ animal.firstname }}</a></li>
                                     {% endfor %}
 
                                     </ul>
@@ -60,9 +62,9 @@
                                     <div class="col-2 row justify-content-end fw-bold">Actions</div>
                                 </li>
                             {% for rapport in rapports %}
-                                <li class="row">
-                                    <div class="col-2">{{ rapport.date|date("d/m/Y") }}</div>
-                                    <div class="col-2">{{ rapport.Animal.firstname }}</div>
+                                <li class="row" data-report="{{ rapport.id }}">
+                                    <div class="col-2" data-reportDate="{{ rapport.date|date("d/m/Y") }}">{{ rapport.date|date("d/m/Y") }}</div>
+                                    <div class="col-2" data-reportAnimal="{{ rapport.Animal.firstname }}">{{ rapport.Animal.firstname }}</div>
                                     <div class="col-2">{{ rapport.etat }}</div>
 
                                     <div class="col-2 actions">
