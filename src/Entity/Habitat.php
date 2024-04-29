@@ -37,10 +37,17 @@ class Habitat
     #[ORM\OneToMany(targetEntity: ImagesHabitat::class, mappedBy: 'habitat', orphanRemoval: true)]
     private Collection $habitat;
 
+    /**
+     * @var Collection<int, RapportVeterinaireHabitat>
+     */
+    #[ORM\OneToMany(targetEntity: RapportVeterinaireHabitat::class, mappedBy: 'relation', orphanRemoval: true)]
+    private Collection $report;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
         $this->habitat = new ArrayCollection();
+        $this->report = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,6 +145,36 @@ class Habitat
             // set the owning side to null (unless already changed)
             if ($habitat->getHabitat() === $this) {
                 $habitat->setHabitat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RapportVeterinaireHabitat>
+     */
+    public function getReport(): Collection
+    {
+        return $this->report;
+    }
+
+    public function addReport(RapportVeterinaireHabitat $report): static
+    {
+        if (!$this->report->contains($report)) {
+            $this->report->add($report);
+            $report->setRelation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(RapportVeterinaireHabitat $report): static
+    {
+        if ($this->report->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getRelation() === $this) {
+                $report->setRelation(null);
             }
         }
 

@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\RapportVeterinaireAnimal;
+use App\Entity\RapportVeterinaireHabitat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<RapportVeterinaireAnimal>
+ * @extends ServiceEntityRepository<RapportVeterinaireHabitat>
  *
- * @method RapportVeterinaireAnimal|null find($id, $lockMode = null, $lockVersion = null)
- * @method RapportVeterinaireAnimal|null findOneBy(array $criteria, array $orderBy = null)
- * @method RapportVeterinaireAnimal[]    findAll()
- * @method RapportVeterinaireAnimal[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RapportVeterinaireHabitat|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RapportVeterinaireHabitat|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RapportVeterinaireHabitat[]    findAll()
+ * @method RapportVeterinaireHabitat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RapportVeterinaireAnimalRepository extends ServiceEntityRepository
+class RapportVeterinaireHabitatRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RapportVeterinaireAnimal::class);
+        parent::__construct($registry, RapportVeterinaireHabitat::class);
     }
 
     //    /**
-    //     * @return RapportVeterinaireAnimal[] Returns an array of RapportVeterinaireAnimal objects
+    //     * @return RapportVeterinaireHabitat[] Returns an array of RapportVeterinaireHabitat objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -36,7 +36,7 @@ class RapportVeterinaireAnimalRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?RapportVeterinaireAnimal
+    //    public function findOneBySomeField($value): ?RapportVeterinaireHabitat
     //    {
     //        return $this->createQueryBuilder('r')
     //            ->andWhere('r.exampleField = :val')
@@ -45,15 +45,17 @@ class RapportVeterinaireAnimalRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
     public function findAllOrderByDate(): ?array
     {
         $entityManager = $this->getEntityManager();
 
         $query = $entityManager->createQuery(
             'SELECT p
-            FROM app\Entity\RapportVeterinaireAnimal p
-            ORDER BY p.date DESC'
+            FROM app\Entity\RapportVeterinaireHabitat p
+            ORDER BY p.createdAt DESC'
         );
         return $query->getResult();
     }
+
 }

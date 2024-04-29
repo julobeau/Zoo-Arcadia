@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\AnimalRepository;
 use App\Repository\RapportVeterinaireAnimalRepository;
+use App\Repository\RapportVeterinaireHabitatRepository;
 use App\Repository\HabitatRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +19,8 @@ class DashboardRapportVeterinaireAnimalController extends AbstractController
 {
     private $existingHabitats;
     private $animalsList;
-    private $rapportsList;
+    private $animalsRapportsList;
+    private $habitatRapportsList;
 
 
     /**
@@ -32,12 +34,14 @@ class DashboardRapportVeterinaireAnimalController extends AbstractController
         HabitatRepository $HabitatRepository,
         AnimalRepository $AnimalRepository,
         RapportVeterinaireAnimalRepository $RapportVeterinaireAnimalRepository,
+        RapportVeterinaireHabitatRepository $RapportVeterinaireHabitatRepository,
         private Security $security,
     )
     {
         $this->existingHabitats = $HabitatRepository->findAll();
         $this->animalsList = $AnimalRepository->findAll();
-        $this->rapportsList = $RapportVeterinaireAnimalRepository->findAll();
+        $this->animalsRapportsList = $RapportVeterinaireAnimalRepository->findAllOrderByDate();
+        $this->habitatRapportsList = $RapportVeterinaireHabitatRepository->findAllOrderByDate();
 
     }
 
@@ -47,12 +51,17 @@ class DashboardRapportVeterinaireAnimalController extends AbstractController
     public function index(
     ): Response
     {
-        foreach($this->rapportsList as $rapport){
+        foreach($this->animalsRapportsList as $rapport){
             $rapportsDates[] = $rapport->getDate()->format('d/m/Y');
         }
+        foreach($this->habitatRapportsList as $rapport){
+            $rapportsDates[] = $rapport->getCreatedAt()->format('d/m/Y');
+        }
         $rapportsUniqueDates = array_unique($rapportsDates);
-        return $this->render('dashboard/dashboard_rapport_veterinaire_animal/index.html.twig', [
-            'rapports' => $this->rapportsList,
+        arsort($rapportsUniqueDates);
+        return $this->render('dashboard/dashboard_rapport_veterinaire_animal/dashboardReport.html.twig', [
+            'rapportsAnimals' => $this->animalsRapportsList,
+            'rapportsHabitats' => $this->habitatRapportsList,
             'habitatsList' => $this->existingHabitats,
             'animalsList' => $this->animalsList,
             'datesRapports' => $rapportsUniqueDates,
