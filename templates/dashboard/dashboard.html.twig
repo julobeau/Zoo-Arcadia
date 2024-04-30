@@ -2,7 +2,7 @@
 {% block title %}Arcadia dashboard{% endblock %}
 
 {% block main %}
-<div class="container dashboard">
+<div class="container-fluid dashboard">
     <div class="dashboard__cards row align-items-center justify-content-around text-center mt-3 mx-1 bg-primary p-2">
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('app_dashboard_users_add') }}" class="button btn btn-primary bg-black shadow">
