@@ -20,6 +20,8 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
+use App\Document\AnimalCount;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 
 #[Route('/Dashboard/animals', name: 'app_dashboard_animals_')]
@@ -79,7 +81,7 @@ class DashboardAnimalsController extends AbstractController
         EntityManagerInterface $manager,
         AnimalRepository $AnimalRepository,
         ImagesAnimauxRepository $ImagesAnimauxRepository,
-
+        DocumentManager $dm,
     ): Response
     {
         $animal = new Animal();
@@ -117,6 +119,19 @@ class DashboardAnimalsController extends AbstractController
 
             $manager->persist($animal);
             $manager->flush();
+
+            /**
+             * initialize animal clicks count document in mongodb
+             */
+            $animalCount = new AnimalCount();
+            $animalCount->setAnimalId($animal->getId());
+            $animalCount->setClickCount(0);
+    
+            $dm->persist($animalCount);
+            $dm->flush();
+            /**
+             * End initialize
+             */
 
             $this->addFlash(
                 'success',
