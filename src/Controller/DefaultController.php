@@ -5,12 +5,31 @@ namespace App\Controller;
 use App\Repository\ServiceRepository;
 use App\Repository\HabitatRepository;
 use App\Repository\ReviewRepository;
+use App\Repository\AnimalRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Document\AnimalCount;
+use Doctrine\ODM\MongoDB\DocumentManager;
+
 
 class DefaultController extends AbstractController
 {
+    private $existinghabitats;
+
+    /**
+     * Get habitats list
+     *
+     * @param HabitatRepository $HabitatRepository
+     */
+    public function __construct(
+        HabitatRepository $HabitatRepository,
+    )
+    {
+        $this->existinghabitats = $HabitatRepository->findAll();
+    }
+
+
     /**
      * display home page
      *
@@ -21,13 +40,14 @@ class DefaultController extends AbstractController
      */
     #[Route('/')]
     public function home(
-        HabitatRepository $HabitatRepository,
         ServiceRepository $ServiceRepository,
-        ReviewRepository $reviewRepository
+        ReviewRepository $reviewRepository,
+        AnimalRepository $AnimalRepository,
+        DocumentManager $dm,
         ): Response
     {
-        $habitats = $HabitatRepository->findAll();
-        foreach($habitats as $habitat){
+
+        foreach($this->existinghabitats as $habitat){
             $habitatImages = $habitat->getHabitat();
             $habitatsName = $habitat->getNom();
             foreach($habitatImages as $image){
@@ -56,12 +76,33 @@ class DefaultController extends AbstractController
             $reviewData['comment'] = $review->getComment();
             $reviewsByPseudo[$review->getPseudo()] = $reviewData;
         }
-        //dd($reviewsByPseudo);
-        return $this->render('pages/home.html.twig',
-                            ['habitatsImages' => $habitatsImages,
+
+        /**
+         * get most viewed animal images
+         */
+        $mostViewedAnimals = $dm->createQueryBuilder(AnimalCount::class)
+            ->select('animalId', 'clickCount')
+            ->limit(4)
+            ->sort('clickCount', 'DESC')
+            ->getQuery()
+            ->execute();
+        $mostViewedAnimalsImages = [];
+        foreach($mostViewedAnimals as $animal){
+            $animalData = $AnimalRepository->findOneby(['id' => $animal->getAnimalId()]);
+            $animalImages = $animalData->getImages();
+            foreach($animalImages as $image){
+                if($image->isCover()){
+                    $mostViewedAnimalsImages[$animal->getAnimalId()] = ['image' => $image->getImage(), 'nom' => $animalData->getFirstname()];
+                }
+            }
+        }
+
+        return $this->render('pages/home.html.twig', [
+                            'habitatsImages' => $habitatsImages,
                             'servicesImages' => $servicesImages,
                             'reviews' => $reviewsByPseudo,
-                            'habitatsList' => $habitats
+                            'habitatsList' => $this->existinghabitats,
+                            'imagesAnimaux' => $mostViewedAnimalsImages
                             ]
                             );
     }
@@ -82,7 +123,7 @@ class DefaultController extends AbstractController
         $habitats = $HabitatRepository->findAll();
         return $this->render('pages/services.html.twig', [
             'allService' => $allServices,
-            'habitatsList' => $habitats
+            'habitatsList' => $this->existinghabitats
             ]
     );
     }

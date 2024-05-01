@@ -77,22 +77,12 @@
     
     <!-- Debut animaux MongoDb necessaire -->
     <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-primary">
+        {% for animalId, data in imagesAnimaux %}
         <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.webp') }}" alt="..."/>
-            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Kevin">Kevin</a></h2>
+            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ("images/animaux/#{ animalId }/#{ data.image }") }}" alt="{{ data.nom }}"/>
+            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Kevin">{{ data.nom }}</a></h2>
         </div>
-        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-magda-ehlers-1319515.webp') }}" alt="..."/>
-            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Melman">Melman</a></h2>
-        </div>
-        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-frans-van-heerden-1499596.webp') }}" alt="..."/>
-            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Asmodée">Asmodée</a></h2>
-        </div>
-        <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
-            <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ('images/animaux/pexels-petr-ganaj-4032590.webp') }}" alt="..."/>
-            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Alex">Alex</a></h2>
-        </div>
+        {% endfor %}
     </div>
     <!-- Fin animaux -->
     <!-- Debut avis -->
