@@ -29,4 +29,7 @@ return [
         'version' => '1.11.3',
         'type' => 'css',
     ],
+    'chart.js/auto' => [
+        'version' => '3.9.1',
+    ],
 ];

@@ -31,4 +31,14 @@
       1 => '/font/fonts/bootstrap-icons.woff',
     ),
   ),
+  'chart.js/auto' => 
+  array (
+    'version' => '3.9.1',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
 );
