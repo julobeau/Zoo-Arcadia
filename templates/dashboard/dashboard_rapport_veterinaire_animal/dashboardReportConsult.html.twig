@@ -10,6 +10,11 @@
     </h2>
     <div id="flush-collapseTwo" class="accordion-collapse collapse bg-dark show" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
+            {% if rapport.veterinaire %}
+            <p class="text-primary"> <span class="fw-bold">Auteur : </span>{{ rapport.veterinaire.firstname }} {{ rapport.veterinaire.name }}</p>
+            {% else %}
+            <p class="text-primary"> <span class="fw-bold">Auteur : </span>aucun</p>
+            {% endif %}
             <p class="text-primary"> <span class="fw-bold">Date : </span>{{ reportType == 'animal' ? rapport.date|date("d/m/Y H:i") : rapport.createdAt|date("d/m/Y H:i") }}</p>
             <p class="text-primary"> <span class="fw-bold">Etat : </span>{{ rapport.etat }}</p>
             <p class="text-primary"> <span class="fw-bold">Rapport détaillé : </span>{{ rapport.rapport }}</p>

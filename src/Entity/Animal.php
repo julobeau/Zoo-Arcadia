@@ -42,10 +42,17 @@ class Animal
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    /**
+     * @var Collection<int, FoodGiven>
+     */
+    #[ORM\OneToMany(targetEntity: FoodGiven::class, mappedBy: 'animal', orphanRemoval: true)]
+    private Collection $foodGivens;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->rapportVeterinaireAnimals = new ArrayCollection();
+        $this->foodGivens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,6 +164,36 @@ class Animal
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FoodGiven>
+     */
+    public function getFoodGivens(): Collection
+    {
+        return $this->foodGivens;
+    }
+
+    public function addFoodGiven(FoodGiven $foodGiven): static
+    {
+        if (!$this->foodGivens->contains($foodGiven)) {
+            $this->foodGivens->add($foodGiven);
+            $foodGiven->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFoodGiven(FoodGiven $foodGiven): static
+    {
+        if ($this->foodGivens->removeElement($foodGiven)) {
+            // set the owning side to null (unless already changed)
+            if ($foodGiven->getAnimal() === $this) {
+                $foodGiven->setAnimal(null);
+            }
+        }
 
         return $this;
     }

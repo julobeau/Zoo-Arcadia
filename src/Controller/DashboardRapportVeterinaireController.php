@@ -155,7 +155,8 @@ class DashboardRapportVeterinaireController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $report = $form->getData();
-            dd($report);
+            $report->setVeterinaire($this->security->getUser()->getId());
+            //dd($report);
             $manager->persist($report);
             $manager->flush();
             
@@ -214,7 +215,8 @@ class DashboardRapportVeterinaireController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $report = $form->getData();
-            dd($report);
+            $report->setVeterinaire($this->security->getUser()->getId());
+            //dd($report);
             $manager->persist($report);
             $manager->flush();
 

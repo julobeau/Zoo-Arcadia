@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -36,6 +38,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, FoodGiven>
+     */
+    #[ORM\OneToMany(targetEntity: FoodGiven::class, mappedBy: 'soigneur', orphanRemoval: true)]
+    private Collection $foodGivens;
+
+    public function __construct()
+    {
+        $this->foodGivens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -156,6 +169,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(?string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FoodGiven>
+     */
+    public function getFoodGivens(): Collection
+    {
+        return $this->foodGivens;
+    }
+
+    public function addFoodGiven(FoodGiven $foodGiven): static
+    {
+        if (!$this->foodGivens->contains($foodGiven)) {
+            $this->foodGivens->add($foodGiven);
+            $foodGiven->setSoigneur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFoodGiven(FoodGiven $foodGiven): static
+    {
+        if ($this->foodGivens->removeElement($foodGiven)) {
+            // set the owning side to null (unless already changed)
+            if ($foodGiven->getSoigneur() === $this) {
+                $foodGiven->setSoigneur(null);
+            }
+        }
 
         return $this;
     }

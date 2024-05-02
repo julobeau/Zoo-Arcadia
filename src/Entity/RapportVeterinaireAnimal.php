@@ -33,6 +33,9 @@ class RapportVeterinaireAnimal
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+    #[ORM\ManyToOne]
+    private ?User $veterinaire = null;
+
     /**
      * Constructor
      */
@@ -114,6 +117,18 @@ class RapportVeterinaireAnimal
     public function setAnimal(?Animal $animal): static
     {
         $this->animal = $animal;
+
+        return $this;
+    }
+
+    public function getVeterinaire(): ?User
+    {
+        return $this->veterinaire;
+    }
+
+    public function setVeterinaire(?User $veterinaire): static
+    {
+        $this->veterinaire = $veterinaire;
 
         return $this;
     }
