@@ -59,9 +59,9 @@
                             <div class="rapports">
                                 <div class="d-flex justify-content-between">
                                     <p class="text-primary fs-3 fw-bold">Rapports animaux</p>
-                                    {#% if is_granted('ROLE_VETO') %#}
+                                    {% if is_granted('ROLE_VETO') %}
                                     <a class="col-auto fs-3 fw-bold pe-5" href="{{ path('app_dashboard_rapport_veterinaire_writeAnimalReport') }}"><i class="bi bi-journal" title="Rédiger un rapport"></i></a>
-                                    {#% endif %#}
+                                    {% endif %}
                                 </div>
 
                                 {% if rapportsAnimals %}
@@ -95,9 +95,9 @@
                                 <div class="rapportsHabitats">
                                     <div class="d-flex justify-content-between">
                                         <p class="col-auto text-primary fs-3 fw-bold">Rapports habitats</p>
-                                        {#% if is_granted('ROLE_VETO') %#}
+                                        {% if is_granted('ROLE_VETO') %}
                                         <a class="col-auto fs-3 fw-bold pe-5" href="{{ path('app_dashboard_rapport_veterinaire_writeHabitatReport') }}"><i class="bi bi-journal" title="Rédiger un rapport"></i></a>
-                                        {#% endif %#}
+                                        {% endif %}
                                     </div>
                                 {% if rapportsHabitats %}
                                 <ul class="text-primary mt-3">

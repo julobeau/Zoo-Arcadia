@@ -25,7 +25,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
 
 #[Route('/Dashboard/animals', name: 'app_dashboard_animals_')]
-#[IsGranted('ROLE_USER')]
+#[IsGranted('ROLE_ADMIN')]
 class DashboardAnimalsController extends AbstractController
 {
     private $existinghabitats;
@@ -51,14 +51,14 @@ class DashboardAnimalsController extends AbstractController
     }
 
     #[Route('/', name: 'show')]
-
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(
     ): Response
     {
         if($this->security->isGranted('ROLE_ADMIN')){
             return $this->redirectToRoute('app_dashboard_animals_add');
         }
+
 
         return $this->render('dashboard/animals/dashboardAnimals.html.twig', [
             'habitatsList' => $this->existinghabitats,
@@ -296,6 +296,7 @@ class DashboardAnimalsController extends AbstractController
      * @return Response
      */
     #[Route('/images/edit/{id}', name: 'editImageAnimal', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function editImage(
         Request $request,
         EntityManagerInterface $manager,

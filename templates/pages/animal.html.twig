@@ -17,7 +17,7 @@
             <p>En bonne santé</p>
             {% endif %}
             {% if is_granted('ROLE_VETO') %}
-            <button class="btn btn-primary">Faire un rapport</button>
+            <a href="{{ path('app_dashboard_rapport_veterinaire_writeAnimalReport')}}" class="btn btn-primary">Faire un rapport</a>
             {% endif %}
         </div>
         {% for image in animal.Images %}

@@ -137,7 +137,7 @@ class DashboardRapportVeterinaireController extends AbstractController
      * @param string $typeReport
      * @return Response
      */
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_VETO')]
     #[Route('/add/animal', name: 'writeAnimalReport', methods:['GET','POST'])]
     public function writeAnimalReport(
         Request $request,
@@ -196,7 +196,7 @@ class DashboardRapportVeterinaireController extends AbstractController
         ]);
     }
     
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_VETO')]
     #[Route('/add/habitat', name: 'writeHabitatReport', methods:['GET','POST'])]
     public function writeHabitatReport(
         Request $request,

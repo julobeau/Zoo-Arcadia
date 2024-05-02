@@ -8,25 +8,24 @@
         <a href="{{ path('app_dashboard_users_add') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-person-badge icons text-primary"></i>
         <span class="text-primary">Utilisateurs</span></a>
-    {% endif %}
-    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EMPLOYEE') %}
-        <a href="{{ path('app_dashboard_services_show') }}" class="button btn btn-primary bg-black shadow">
-        <i class="bi bi-shop icons text-primary"></i>
-        <span class="text-primary">Services</span></a>
-        <a href="{{ path('app_dashboard_rapport_veterinaire_show') }}" class="button btn btn-primary bg-black shadow">
-        <i class="bi bi-file-text icons text-primary"></i>
-        <span class="text-primary">Rapports</span></a>
-    {% endif %}
         <a href="{{ path('app_dashboard_habitats_show') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-globe-europe-africa icons text-primary"></i>
         <span class="text-primary">Habitats</span></a>
         <a href="{{ path('app_dashboard_races_show') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-gender-neuter icons text-primary"></i><br>
         <span class="text-primary">Races</span></a>
-        
         <a href="{{ path('app_dashboard_animals_show') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-fingerprint icons text-primary"></i>
         <span class="text-primary">Animaux</span></a>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_EMPLOYEE') %}
+        <a href="{{ path('app_dashboard_services_show') }}" class="button btn btn-primary bg-black shadow">
+        <i class="bi bi-shop icons text-primary"></i>
+        <span class="text-primary">Services</span></a>
+    {% endif %}
+        <a href="{{ path('app_dashboard_rapport_veterinaire_show') }}" class="button btn btn-primary bg-black shadow">
+        <i class="bi bi-file-text icons text-primary"></i>
+        <span class="text-primary">Rapports</span></a>
     {% if is_granted('ROLE_EMPLOYEE') %}        
         <a href="#" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-star icons text-primary"></i>
