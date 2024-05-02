@@ -47,6 +47,7 @@ class DefaultController extends AbstractController
         ): Response
     {
 
+
         foreach($this->existinghabitats as $habitat){
             $habitatImages = $habitat->getHabitat();
             $habitatsName = $habitat->getNom();
@@ -92,7 +93,7 @@ class DefaultController extends AbstractController
             $animalImages = $animalData->getImages();
             foreach($animalImages as $image){
                 if($image->isCover()){
-                    $mostViewedAnimalsImages[$animal->getAnimalId()] = ['image' => $image->getImage(), 'nom' => $animalData->getFirstname()];
+                    $mostViewedAnimalsImages[$animal->getAnimalId()] = ['image' => $image->getImage(), 'nom' => $animalData->getFirstname(), 'habitat' => $animalData->getHabitat()];
                 }
             }
         }

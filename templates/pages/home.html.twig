@@ -8,13 +8,16 @@
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="10000">
-                        <img src="{{ asset ('images/nikolay-tchaouchev-ttpNCevA1tA-unsplash.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="{{ asset ('images/carousel/nikolay-tchaouchev-ttpNCevA1tA-unsplash.webp') }}" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item" data-bs-interval="2000">
-                        <img src="{{ asset ('images/pexels-rudy-kirchner-1831536.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="{{ asset ('images/carousel/pexels-rudy-kirchner-1831536.webp') }}" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ asset ('images/animaux/pexels-oleksandr-p-321552.jpg') }}" class="d-block w-100" alt="...">
+                        <img src="{{ asset ('images/carousel/pexels-pixabay-247376.webp') }}" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ asset ('images/carousel/pexels-magda-ehlers-pexels-1486959.webp') }}" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
@@ -46,15 +49,15 @@
     </div>
     <!--Fin Hero -->
     <!-- Debut habitats-->
-    <div class="section row section-habitats justify-content-center p-3 mt-3 mx-1 mb-3 rounded">
+    <div class="section row section-habitats justify-content-around px-3 mt-3 mx-1 mb-3 rounded">
         {% for habitat in habitatsList %}
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 justify-content-center text-center">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mt-3 justify-content-center text-center">
             {% for image in habitat.Habitat %}
                 {% if image.cover == 1 %}
                     <img class="w-100 img-habitat rounded-circle" src="{{ asset ("images/habitats/#{ habitat.id }/#{ image.Image }") }}"/>
                 {% endif %}
             {% endfor %}    
-            <a class="btn btn-primary mt-3 btn-habitat" id="savane" href="\Habitats\{{ habitat.id }}#habitat">Découvrir l'habitat {{ habitat.nom }}</a>
+            <a class="btn btn-primary my-3 btn-habitat" id="savane" href="\Habitats\{{ habitat.id }}#habitat">Découvrir l'habitat {{ habitat.nom }}</a>
         </div>
     {% endfor %}
 
@@ -75,12 +78,12 @@
     </div>
     <!-- Fin services -->
     
-    <!-- Debut animaux MongoDb necessaire -->
+    <!-- Debut animaux -->
     <div class="section row section-animaux justify-content-around p-3 mt-3 mx-1 mb-3 rounded bg-primary">
         {% for animalId, data in imagesAnimaux %}
         <div class="roundImageOverlay col-lg-3 col-sm-6 mb-3">
             <img class="w-100 roundImageOverlay__image rounded-circle" src="{{ asset ("images/animaux/#{ animalId }/#{ data.image }") }}" alt="{{ data.nom }}"/>
-            <h2 class="roundImageOverlay__texte"><a href="#" alt="Photo de Kevin">{{ data.nom }}</a></h2>
+            <h2 class="roundImageOverlay__texte"><a href="/Habitats/{{ data.habitat.nom }}/{{ data.nom }}">{{ data.nom }}</a></h2>
         </div>
         {% endfor %}
     </div>
