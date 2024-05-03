@@ -11,24 +11,11 @@ import { Controller } from '@hotwired/stimulus';
  */
 export default class extends Controller {
     connect() {
-        this.addEventListener("click", addReview);
+        const btn = document.getElementById('submitReview')
+        btn.addEventListener("click", this.addReview);
     }
 
-    addReview(){
-        const formulaireHtml = document.getElementById('reviewForm')
-        const formData = new FormData(formulaireHtml)
-        const answers = {}
-        formData.forEach(
-            (value, key) => {
-                if(value != ""){
-                    answers[key] = value
-                }
-            }
-        )
-        postData(JSON.stringify(answers), resultMessage)
-    }
-    
-    resultMessage(result){
+    resultMessage = (result) => {
         const resultObj = JSON.parse(result)
         const parentDiv = document.getElementById('modal-body')
         const monElement = document.createElement("div")
@@ -39,8 +26,36 @@ export default class extends Controller {
         document.getElementById('inputComment').value=""
         document.getElementById('inputNote').selectedIndex=0;
     }
+
+    addReview = () => {
+        const formulaireHtml = document.getElementById('reviewForm')
+        const formData = new FormData(formulaireHtml)
+        const answers = {}
+        formData.forEach(
+            (value, key) => {
+                if(value != ""){
+                    answers[key] = value
+                }
+            }
+        )
+        this.postData(JSON.stringify(answers), this.resultMessage)
+        /*const data = JSON.stringify(answers)
+        const requestOptions = {
+            method: "POST",
+            body: data,
+            redirect: "follow"
+        };
+        fetch(`http://www.zoo-arcadia.dvlp/api/review`, requestOptions)
+        .then((response) => response.json())
+        .then((result) => {
+            this.resultMessage(result)
+        })
+        .catch((error) => console.error(error))*/
+    }
     
-    postData(data, callback) {
+
+    
+    postData = (data, callback) => {
         const requestOptions = {
             method: "POST",
             body: data,

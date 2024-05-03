@@ -31,6 +31,14 @@ class DashboardReviewsController extends AbstractController
         $this->existinghabitats = $HabitatRepository->findAll();
     }
 
+    /**
+     * Display review validation form
+     *
+     * @param Request $request
+     * @param ReviewRepository $ReviewRepository
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
     #[Route('/validate', name: 'validate', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_EMPLOYEE')]
     public function show(
@@ -46,7 +54,7 @@ class DashboardReviewsController extends AbstractController
             $message = count($reviewNotValidated);
         }
         else{
-            return $this->redirectToRoute('app_dashboard');
+            return $this->redirectToRoute('app_dashboard_reviews_validateEnd');
         }
         if($form){
             $form->handleRequest($request);
@@ -74,6 +82,23 @@ class DashboardReviewsController extends AbstractController
             'reviewsToValidateCount' => $message,
             'habitatsList' => $this->existinghabitats,
             'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('/validate/end', name: 'validateEnd', methods: ['GET'])]
+    #[IsGranted('ROLE_EMPLOYEE')]
+    public function validateEnd(
+        Request $request,
+        ReviewRepository $ReviewRepository,
+        EntityManagerInterface $manager,
+
+    ): Response
+    {
+        $message = 'aucun';
+        return $this->render('dashboard/reviews/dashboardReviews.html.twig', [
+            'reviewsToValidateCount' => $message,
+            'habitatsList' => $this->existinghabitats,
+            'form' => null,
         ]);
     }
 }
