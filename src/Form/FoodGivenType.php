@@ -63,7 +63,7 @@ class FoodGivenType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('animal', EntityType::class, [
+            /*->add('animal', EntityType::class, [
                 'class' => Animal::class,
                 'choice_label' => 'firstname',
                 'attr' => [
@@ -84,7 +84,7 @@ class FoodGivenType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label text-primary mt-3'
                 ],
-            ])
+            ])*/
             ->add('Submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary mt-3'

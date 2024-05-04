@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,15 +28,18 @@ class DashboardAnimalFeedingController extends AbstractController
 
 
     /**
-     * Get habitats and animals lists
+     * Get habitats and animals lists -- initialize security
      *
      * @param HabitatRepository $HabitatRepository
      * @param AnimalRepository $AnimalRepository
+     * @param Securit $security
      */
     public function __construct(
         HabitatRepository $HabitatRepository,
         AnimalRepository $AnimalRepository,
         RapportVeterinaireAnimalRepository $RapportVeterinaireAnimalRepository,
+        FoodGivenRepository $FoodGivenRepository,
+        private Security $security,
     )
     {
         $this->existingHabitats = $HabitatRepository->findAll();
@@ -44,14 +48,14 @@ class DashboardAnimalFeedingController extends AbstractController
         $today = new \DateTimeImmutable();
         $dayBegin = $today->setTime(00, 00);
         foreach($this->animalsList as $animal){
-            if($animal->getFoodGivens()[0]){
-                $animalLastMeal = $animal->getFoodGivens()[0]->getDate();
-                if($animalLastMeal < $dayBegin){
-                    $this->nonFedAnimalsReports[$animal->getId()] = $RapportVeterinaireAnimalRepository->findOneBy(['animal' => $animal->getId()], ['date' => 'DESC']);
-                }
+            $animalLastMeal = $FoodGivenRepository->findOneBy(['animal' => $animal], ['date' => 'DESC']);
+            if($animalLastMeal && $animalLastMeal->getDate() < $dayBegin){
+                $this->nonFedAnimalsReports[$animal->getId()] = $RapportVeterinaireAnimalRepository->findOneBy(['animal' => $animal->getId()], ['date' => 'DESC']);
+            }
+            elseif(!$animalLastMeal){
+                $this->nonFedAnimalsReports[$animal->getId()] = $RapportVeterinaireAnimalRepository->findOneBy(['animal' => $animal->getId()], ['date' => 'DESC']);
             }
         }
-
     }
 
     /**
@@ -92,12 +96,24 @@ class DashboardAnimalFeedingController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
+            $foodGiven = $form->getData();
+            $foodGiven->setAnimal($nonFedAnimal);
+            $foodGiven->setSoigneur($this->security->getUser());
+            $manager->persist($foodGiven);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'Le nouveau rapport a été enregistré.'
+            );
+            return $this->redirectToRoute('app_dashboard_feeding_list');
+
         }
 
         return $this->render('dashboard/feeding/dashboardFed.html.twig', [
             'rapportsAnimals' => $this->animalsRapportsList,
             'nonFedAnimalsReports' => $this->nonFedAnimalsReports,
+            'animalToFeed' => $nonFedAnimal,
             'habitatsList' => $this->existingHabitats,
             'animalsList' => $this->animalsList,
             'form' => $form->createView()

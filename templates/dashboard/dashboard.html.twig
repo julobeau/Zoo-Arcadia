@@ -30,6 +30,8 @@
         <a href="{{ path('app_dashboard_reviews_validate') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-star icons text-primary"></i><br>
         <span class="text-primary">Avis</span></a>
+    {% endif %}
+    {% if is_granted('ROLE_EMPLOYEE') or is_granted('ROLE_VETO') %}        
         <a href="{{ path('app_dashboard_feeding_list') }}" class="button btn btn-primary bg-black shadow">
         <i class="bi bi-egg-fried icons text-primary"></i>
         <span class="text-primary">Nourriture</span></a>
