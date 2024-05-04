@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 #[Route('/Dashboard/feeding', name: 'app_dashboard_feeding_')]
-#[IsGranted('ROLE_EMPLOYEE')]
+#[IsGranted('ROLE_USER')]
 class DashboardAnimalFeedingController extends AbstractController
 {
     private $existingHabitats;
@@ -77,6 +77,23 @@ class DashboardAnimalFeedingController extends AbstractController
             'habitatsList' => $this->existingHabitats,
             'animalsList' => $this->animalsList,
             'nonFedAnimalsReports' => $this->nonFedAnimalsReports,
+        ]);
+    }
+
+    #[IsGranted('ROLE_VETO')]
+    #[Route('/overview', name: 'overview')]
+    public function overview(
+        FoodGivenRepository $FoodGivenRepository,
+
+    ): Response
+    {
+        $animalsMeals = $FoodGivenRepository->findBy([], ['date' => 'DESC']);
+
+        return $this->render('dashboard/feeding/dashboardFeedingOverview.html.twig', [
+            'rapportsAnimals' => $this->animalsRapportsList,
+            'habitatsList' => $this->existingHabitats,
+            'animalsList' => $this->animalsList,
+            'animalsMeals' => $animalsMeals,
         ]);
     }
 
