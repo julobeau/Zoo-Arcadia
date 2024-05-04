@@ -28,8 +28,11 @@
         <span class="text-primary">Rapports</span></a>
     {% if is_granted('ROLE_EMPLOYEE') %}        
         <a href="{{ path('app_dashboard_reviews_validate') }}" class="button btn btn-primary bg-black shadow">
-        <i class="bi bi-star icons text-primary"></i>
+        <i class="bi bi-star icons text-primary"></i><br>
         <span class="text-primary">Avis</span></a>
+        <a href="{{ path('app_dashboard_reviews_validate') }}" class="button btn btn-primary bg-black shadow">
+        <i class="bi bi-egg-fried icons text-primary"></i>
+        <span class="text-primary">Nourriture</span></a>
     {% endif %}
     </div>
 
