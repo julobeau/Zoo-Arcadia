@@ -45,6 +45,11 @@ class RapportVeterinaireAnimalRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    /**
+     * Return all reports  ordered by date desc
+     *
+     * @return array|null
+     */
     public function findAllOrderByDate(): ?array
     {
         $entityManager = $this->getEntityManager();
