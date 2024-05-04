@@ -19,7 +19,39 @@
         <div class="row bg-dark rounded mt-3 py-2 mx-1 justify-content-center">
         <p class="text-primary">Nombre d'avis à valider/rejeter restant: {{ reviewsToValidateCount }}</p>
         {% if form %}
-        {{ form(form) }}
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
+                <div class="form-group">
+                    {{ form_label(form.pseudo) }}
+                    {{ form_widget(form.pseudo) }}
+                    <div class="form-error">
+                        {{ form_errors(form.pseudo) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.comment) }}
+                    {{ form_widget(form.comment) }}
+                    <div class="form-error">
+                        {{ form_errors(form.comment) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.note) }}
+                    {{ form_widget(form.note) }}
+                    <div class="form-error">
+                        {{ form_errors(form.note) }}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center text-center">    
+                    <div class="form-group me-3">
+                        {{ form_row(form.Validate) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.Reject) }}
+                    </div>
+                </div>    
+                {{ form_end(form) }}
+
         {% else %}
         <p class="text-primary fw-bold">Aucun avis à valider</p>
         {% endif %}

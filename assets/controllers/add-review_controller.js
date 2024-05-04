@@ -39,18 +39,6 @@ export default class extends Controller {
             }
         )
         this.postData(JSON.stringify(answers), this.resultMessage)
-        /*const data = JSON.stringify(answers)
-        const requestOptions = {
-            method: "POST",
-            body: data,
-            redirect: "follow"
-        };
-        fetch(`http://www.zoo-arcadia.dvlp/api/review`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            this.resultMessage(result)
-        })
-        .catch((error) => console.error(error))*/
     }
     
 
