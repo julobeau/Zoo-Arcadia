@@ -1,0 +1,13 @@
+@use "../custom" as custom;
+
+.footer {
+    color: custom.$primary;
+
+    a{
+        text-decoration: none;
+        
+        &:hover {
+            color: custom.$black;
+        }
+    }
+}

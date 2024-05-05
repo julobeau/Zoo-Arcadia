@@ -1,0 +1,45 @@
+@use "../custom" as custom;
+@use "../components/hero" as hero;
+@use "../base/base";
+
+.habitats-image-hero {
+    @extend .hero;
+    color: white;
+    background-image: url(../images/heros/habitat-hero.webp);
+}
+
+.imageHabitat{
+    @extend .hero;
+    //background-image: url(../images/savane-david-clode-jJWBM15E1AA-unsplash.jpg);
+    color: white;
+    position:relative;
+
+    &__image{
+        height:30rem;
+        object-fit: cover;
+    }
+
+    &__titreSecondaire{
+        @extend .titre-secondaire;
+        position:absolute;
+        top:50%;
+    }
+}
+
+.image-Jungle{
+    @extend .hero;
+    background-image: url(../images/jungle-justin-clark-H7JiEU8Slnw-unsplash.jpg);
+    color: white;
+}
+
+.image-Marais{
+    @extend .hero;
+    background-image: url(../images/marais-tim-foster-eYeESGYSZoY-unsplash.jpg);
+    color: white;
+}
+
+.habitat-accroche{
+    font-family: custom.$font-family-serif;
+    color: custom.$primary;
+    font-size: 2rem;
+}

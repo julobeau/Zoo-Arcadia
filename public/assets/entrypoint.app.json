@@ -1,0 +1,18 @@
+[
+    "\/assets\/bootstrap.js",
+    "\/assets\/styles\/app.css",
+    "\/assets\/js\/bootstrap.bundle.min.js",
+    "\/assets\/js\/index.bundle.min.js",
+    "bootstrap-icons\/font\/bootstrap-icons.min.css",
+    "@symfony\/stimulus-bundle",
+    "@hotwired\/stimulus",
+    "\/assets\/@symfony\/stimulus-bundle\/controllers.js",
+    "\/assets\/@symfony\/ux-chartjs\/controller.js",
+    "\/assets\/@symfony\/ux-turbo\/turbo_controller.js",
+    "\/assets\/controllers\/add-review_controller.js",
+    "\/assets\/controllers\/filter-animal_controller.js",
+    "\/assets\/controllers\/filter-date_controller.js",
+    "\/assets\/controllers\/hello_controller.js",
+    "chart.js\/auto",
+    "@hotwired\/turbo"
+]

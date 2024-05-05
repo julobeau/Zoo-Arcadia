@@ -1,0 +1,23 @@
+@use "../custom" as custom;
+
+.navbar {
+
+    .nav-link {
+        color: custom.$primary;
+
+        &:hover {
+            color: custom.$black;
+        }
+    }
+    .dropdown-item{
+        color: custom.$primary;
+
+        &:hover{
+            background-color: custom.$primary;
+            color: custom.$black;
+        }
+    }
+    .logo{
+        height:4rem;
+    }
+}

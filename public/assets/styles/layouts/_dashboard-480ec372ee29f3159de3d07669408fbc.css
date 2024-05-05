@@ -1,0 +1,9 @@
+.icons{
+    font-size: 5rem;
+}
+
+.rapports{
+    max-height: 30rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
