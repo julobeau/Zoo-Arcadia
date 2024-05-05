@@ -6,7 +6,7 @@
 parameters:
     env(MONGODB_URL): ''
     env(MONGODB_DB): ''
-    mongodb_server: "mongodb://root:password@localhost:8090/?authSource=arcadia"
+    #mongodb_server: "mongodb://root:password@localhost:8090/?authSource=arcadia"
 
 services:
     # default configuration for services in *this* file
