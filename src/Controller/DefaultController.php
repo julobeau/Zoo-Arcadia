@@ -38,7 +38,7 @@ class DefaultController extends AbstractController
      * @param ReviewRepository $reviewRepository
      * @return Response
      */
-    #[Route('/')]
+    #[Route('/', name: 'home')]
     public function home(
         ServiceRepository $ServiceRepository,
         ReviewRepository $reviewRepository,
