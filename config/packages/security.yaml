@@ -25,6 +25,8 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                always_use_default_target_path: true
+                default_target_path: /Dashboard
                 enable_csrf: true
             logout:
                 path: app_logout
