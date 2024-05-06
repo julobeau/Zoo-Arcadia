@@ -39,8 +39,8 @@ DirectoryIndex index.php
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
 
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
-    RewriteCond %{HTTPS} !on
-    RewriteRule ^(.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteCond %{HTTPS} off
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Redirect to URI without front controller to prevent duplicate content
     # (with and without `/index.php`). Only do this redirect on the initial
