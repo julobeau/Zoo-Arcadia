@@ -7,6 +7,7 @@
 /var/
 /vendor/
 /migrations/old/
+/documents/Manuel_utilisation.odt
 ###< symfony/framework-bundle ###
 
 .env.local

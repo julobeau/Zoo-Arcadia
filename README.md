@@ -1,7 +1,7 @@
 
 # Zoo Arcadia - ECF Studi
 
-A website for a fictionnal zoo developped as a final exercise for studi school.
+A website for a fictionnal zoo developped as the final exercise for studi school.
 
 
 
