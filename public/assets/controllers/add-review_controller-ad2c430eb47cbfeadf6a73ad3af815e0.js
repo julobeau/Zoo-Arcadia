@@ -50,7 +50,7 @@ export default class extends Controller {
             redirect: "follow"
         };
     
-        fetch(`http://www.zoo-arcadia.dvlp/api/review`, requestOptions)
+        fetch(`https://zoo-arcadia-jb-9f78cb1dd18e.herokuapp.com/api/review`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 callback(result)
