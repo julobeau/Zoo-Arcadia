@@ -6,6 +6,8 @@
 /public/bundles/
 /var/
 /vendor/
+/migrations/old/
+/documents/
 ###< symfony/framework-bundle ###
 
 .env.local
