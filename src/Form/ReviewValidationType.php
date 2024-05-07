@@ -72,6 +72,7 @@ class ReviewValidationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+            'sanitize_html' => true,
             'data_class' => Review::class,
         ]);
     }
