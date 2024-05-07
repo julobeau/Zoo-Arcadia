@@ -1,0 +1,6 @@
+@use "../components/hero" as hero;
+
+.hero_connexion{
+    @extend .hero;
+    background-image: url(../../assets/images/heros/javygo-OTYzpn6_edw-unsplash.webp);
+}
