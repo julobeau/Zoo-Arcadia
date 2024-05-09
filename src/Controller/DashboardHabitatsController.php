@@ -278,7 +278,7 @@ class DashboardHabitatsController extends AbstractController
                 if ($photo = $form['newImage']->getData()) {
                     $filename = $habitat->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
                     $photoDir = $this->getParameter('kernel.project_dir').'/public/assets/images/habitats/'.$habitat->getId();
-                    dd($photoDir);
+                    //dd($photoDir);
                     $photo->move($photoDir, $filename);
                     $imageHabitat = new ImagesHabitat();
                     $imageHabitat->setImage($filename);
