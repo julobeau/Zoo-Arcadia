@@ -95,7 +95,7 @@ class DashboardAnimalsController extends AbstractController
             $manager->flush();
             if ($photo = $form['photos']->getData()) {
                 $filename = $animal->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-                $photoDir = $this->getParameter('kernel.project_dir').'public/assets/images/animaux/'.$animal->getId();
+                $photoDir = $this->getParameter('kernel.project_dir').'/public/assets/images/animaux/'.$animal->getId();
                 $photo->move($photoDir, $filename);
                 $photosAnimal = $ImagesAnimauxRepository->findBy(['animal' => $animal]);
                 foreach($photosAnimal as $photo){
@@ -184,7 +184,7 @@ class DashboardAnimalsController extends AbstractController
             $animal = $form->getData();
             if ($photo = $form['photos']->getData()) {
                 $filename = $animal->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-                $photoDir = $this->getParameter('kernel.project_dir').'public/assets/images/animaux/'.$animal->getId();
+                $photoDir = $this->getParameter('kernel.project_dir').'/public/assets/images/animaux/'.$animal->getId();
                 $photo->move($photoDir, $filename);
                 $photosAnimal = $ImagesAnimauxRepository->findBy(['animal' => $animal]);
                 if(!empty($photosAnimal)){
@@ -318,7 +318,7 @@ class DashboardAnimalsController extends AbstractController
             if ($form->getClickedButton() && 'add' === $form->getClickedButton()->getName()) {
                 if ($photo = $form['newImage']->getData()) {
                     $filename = $animal->getId().'-'.bin2hex(random_bytes(6)).'.'.$photo->guessExtension();
-                    $photoDir = $this->getParameter('kernel.project_dir').'public/assets/images/animaux/'.$animal->getId();
+                    $photoDir = $this->getParameter('kernel.project_dir').'/public/assets/images/animaux/'.$animal->getId();
                     $photo->move($photoDir, $filename);
                     $imageAnimal = new ImagesAnimaux();
                     $imageAnimal->setImage($filename);
@@ -338,7 +338,7 @@ class DashboardAnimalsController extends AbstractController
                 $imagesToDelete = $form['image']->getData();
                 foreach($imagesToDelete as $imageDelete){
                     $filename = $imageDelete->getImage();
-                    $pathFile = $this->getParameter('kernel.project_dir').'public/assets/images/animaux/'.$animal->getId().'/'.$filename;
+                    $pathFile = $this->getParameter('kernel.project_dir').'/public/assets/images/animaux/'.$animal->getId().'/'.$filename;
                     $manager->remove($imageDelete);
                     $manager->flush();
                     try{
