@@ -37,7 +37,7 @@ class HabitatImageAddType extends AbstractType
                             'image/webp',
                         ],
                         'mimeTypesMessage' => 'Seuls les fichiers jpeg, png et webp sont acceptés.'
-                ])
+                    ])
                 ]
             ])
             ->add('habitat', EntityType::class, [
