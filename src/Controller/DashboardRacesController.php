@@ -79,7 +79,7 @@ class DashboardRacesController extends AbstractController
             $race = $form->getData();
             if ($photo = $form['photos']->getData()) {
                 $filename = 'race_'.strtolower($race->getLabel()).'.'.$photo->guessExtension();
-                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/races/';
+                $photoDir = $this->getParameter('kernel.project_dir').'public/assets/images/races/';
                 $photo->move($photoDir, $filename);
             }
 
@@ -129,7 +129,7 @@ class DashboardRacesController extends AbstractController
             $race = $form->getData();
             if ($photo = $form['photos']->getData()) {
                 $filename = 'race_'.strtolower($race->getLabel()).'.'.$photo->guessExtension();
-                $photoDir = $this->getParameter('kernel.project_dir').'/assets/images/races/';
+                $photoDir = $this->getParameter('kernel.project_dir').'public/assets/images/races/';
                 $photo->move($photoDir, $filename);
             }
 
