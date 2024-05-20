@@ -8,6 +8,8 @@
 /vendor/
 /migrations/old/
 /documents/Manuel_utilisation.odt
+/documents/Documentation_technique.odt
+/documents/Charte_graphique.odt
 ###< symfony/framework-bundle ###
 
 .env.local
